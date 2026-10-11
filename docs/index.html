@@ -124,59 +124,222 @@
         <div class="container">
           <div class="hero-pill">
             <span class="pulse-dot"></span>
-            <span>A quieter browser · Manifest V3</span>
+            <span>Live Interactive Cockpit</span>
           </div>
 
           <h1 class="hero-title">
-            Hush — Chrome Tab Volume Control & Audio Manager
+            Test the Hush Engine Right Now
           </h1>
 
           <p class="hero-subtitle">
-            Control volume for individual Chrome tabs, mute noisy background tabs with zero latency, organize tabs into native groups, and focus with one-click presets.
+            Experience the real audio engine, master category sliders, and focus presets in real time below.
           </p>
 
           <div class="hero-actions">
             <a
+              href="#installation"
+              class="btn-chrome"
+              aria-label="Add Hush to Google Chrome"
+            >
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                <circle cx="12" cy="12" r="10" stroke="rgba(255,255,255,0.4)" stroke-width="1.5" />
+                <circle cx="12" cy="12" r="4" fill="#B6B8D0" />
+                <path d="M12 2a10 10 0 0 1 8.66 5H12" stroke="#7BE0CA" stroke-width="2" />
+                <path d="M20.66 7a10 10 0 0 1-5 13.66L12 12" stroke="#B6B8D0" stroke-width="2" />
+                <path d="M7 20.66a10 10 0 0 1-5-8.66H12" stroke="#E2E8F0" stroke-width="2" />
+              </svg>
+              <span>Add to Chrome — It's Free</span>
+            </a>
+            <a href="#sandbox" class="btn-primary">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <polygon points="5 3 19 12 5 21 5 3"></polygon>
+              </svg>
+              <span>Live Sound Sandbox ↓</span>
+            </a>
+            <a
               href="https://github.com/abhishek-kumar-pundir/Hush"
-              class="btn-primary"
+              class="btn-secondary"
               target="_blank"
               rel="noopener noreferrer"
             >
-              <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" style="vertical-align: middle; margin-right: 4px;">
                 <path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/>
               </svg>
-              <span>View Source on GitHub</span>
-            </a>
-            <a href="#installation" class="btn-secondary">
-              Installation Guide
+              <span>GitHub (Open Source)</span>
             </a>
           </div>
 
-          <!-- Product Preview Card -->
-          <div class="hero-preview glass-card" aria-label="Hush Extension Interface Demo">
-            <div class="preview-bar">
+          <!-- Trust Badges -->
+          <div class="trust-badges-bar">
+            <span class="trust-badge-item">
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="var(--accent-mint)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path></svg>
+              100% Client-Side Privacy
+            </span>
+            <span class="trust-badge-item">
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="var(--accent-periwinkle)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon></svg>
+              Zero Audio Latency
+            </span>
+            <span class="trust-badge-item">
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#CBD0EC" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
+              Manifest V3 Compliant
+            </span>
+          </div>
+
+          <!-- Interactive Live Sound Sandbox -->
+          <div id="sandbox" class="demo-sandbox-card glass-card" aria-label="Hush Live Interactive Sandbox">
+            <div class="demo-hud-header">
               <div class="logo-text">
-                <img src="icon-32.png" width="22" height="22" alt="" class="logo-orb" />
-                <span class="logo-name" style="font-size: 16px;">Hush</span>
-                <span class="logo-tag">AUDIO</span>
+                <img src="icon-32.png" width="24" height="24" alt="" class="logo-orb" />
+                <span class="logo-name" style="font-size: 17px;">Hush HUD</span>
+                <span class="logo-tag">INTERACTIVE</span>
               </div>
-              <span style="font-size: 11px; color: var(--accent-mint); font-weight: 600; display: flex; align-items: center; gap: 5px;">
-                <span class="pulse-dot"></span> Active Session
-              </span>
+
+              <div style="display: flex; align-items: center; gap: 10px;">
+                <!-- Real-time Visualizer -->
+                <div id="demo-visualizer" class="demo-visualizer" aria-label="Audio Waveform Visualizer">
+                  <div class="vis-bar"></div>
+                  <div class="vis-bar"></div>
+                  <div class="vis-bar"></div>
+                  <div class="vis-bar"></div>
+                  <div class="vis-bar"></div>
+                  <div class="vis-bar"></div>
+                  <div class="vis-bar"></div>
+                </div>
+
+                <!-- Web Audio Synthesizer Toggle -->
+                <button
+                  id="demo-audio-toggle"
+                  class="demo-audio-toggle"
+                  type="button"
+                  aria-pressed="false"
+                  title="Synthesize real binaural ambient sound in browser"
+                >
+                  <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon><path d="M19.07 4.93a10 10 0 0 1 0 14.14M15.54 8.46a5 5 0 0 1 0 7.07"></path></svg>
+                  <span id="demo-audio-status">Sound Sandbox: Muted</span>
+                </button>
+              </div>
             </div>
 
-            <div class="preview-row">
-              <span style="font-size: 13px; font-weight: 600;">Spotify — Web Player</span>
-              <span class="preview-vol">85%</span>
+            <!-- Group Master Box: Entertainment -->
+            <div class="demo-group-box">
+              <div class="demo-group-header">
+                <span class="demo-group-title">
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--accent-periwinkle)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="2.18" ry="2.18"></rect><line x1="7" y1="2" x2="7" y2="22"></line><line x1="17" y1="2" x2="17" y2="22"></line><line x1="2" y1="12" x2="22" y2="12"></line><line x1="2" y1="7" x2="7" y2="7"></line><line x1="2" y1="17" x2="7" y2="17"></line><line x1="17" y1="17" x2="22" y2="17"></line><line x1="17" y1="7" x2="22" y2="7"></line></svg>
+                  Entertainment Group Master (2 tabs)
+                </span>
+                <div class="demo-slider-wrap">
+                  <input
+                    type="range"
+                    id="slider-group-entertainment"
+                    class="demo-slider"
+                    min="0"
+                    max="100"
+                    value="100"
+                    aria-label="Master volume for Entertainment tabs"
+                  />
+                  <span id="val-group-entertainment" class="demo-vol-val">100%</span>
+                </div>
+              </div>
             </div>
-            <div class="preview-row">
-              <span style="font-size: 13px; font-weight: 500; color: var(--text-secondary);">(92) YouTube — Lo-Fi Beats</span>
-              <span class="preview-vol">56%</span>
+
+            <!-- Tab List -->
+            <div class="demo-tab-list">
+              <!-- Spotify Row -->
+              <div id="row-spotify" class="demo-tab-row">
+                <img src="https://open.spotify.com/favicon.ico" alt="" class="demo-tab-icon" onerror="this.style.display='none'" />
+                <span class="demo-tab-title" title="Spotify – Web Player">Spotify – Web Player</span>
+                <div class="demo-slider-wrap">
+                  <input
+                    type="range"
+                    id="slider-spotify"
+                    class="demo-slider"
+                    min="0"
+                    max="100"
+                    value="85"
+                    aria-label="Spotify volume"
+                  />
+                  <span id="val-spotify" class="demo-vol-val">85%</span>
+                  <button id="mute-spotify" class="demo-btn-mute" type="button" aria-label="Mute Spotify">
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon><line x1="23" y1="9" x2="17" y2="15"></line><line x1="17" y1="9" x2="23" y2="15"></line></svg>
+                  </button>
+                </div>
+              </div>
+
+              <!-- YouTube Row -->
+              <div id="row-youtube" class="demo-tab-row">
+                <img src="https://www.youtube.com/s/desktop/favicon.ico" alt="" class="demo-tab-icon" onerror="this.style.display='none'" />
+                <span class="demo-tab-title" title="(92) YouTube – Chill Lo-Fi Study Beats">(92) YouTube – Chill Lo-Fi Study Beats</span>
+                <div class="demo-slider-wrap">
+                  <input
+                    type="range"
+                    id="slider-youtube"
+                    class="demo-slider"
+                    min="0"
+                    max="100"
+                    value="70"
+                    aria-label="YouTube volume"
+                  />
+                  <span id="val-youtube" class="demo-vol-val">70%</span>
+                  <button id="mute-youtube" class="demo-btn-mute" type="button" aria-label="Mute YouTube">
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon><line x1="23" y1="9" x2="17" y2="15"></line><line x1="17" y1="9" x2="23" y2="15"></line></svg>
+                  </button>
+                </div>
+              </div>
+
+              <!-- WhatsApp Row -->
+              <div id="row-whatsapp" class="demo-tab-row">
+                <img src="https://static.whatsapp.net/rsrc.php/v3/yP/r/rNqcjfGwGZZ.png" alt="" class="demo-tab-icon" onerror="this.style.display='none'" />
+                <span class="demo-tab-title" title="WhatsApp Web – Notifications">WhatsApp Web – Notifications</span>
+                <div class="demo-slider-wrap">
+                  <input
+                    type="range"
+                    id="slider-whatsapp"
+                    class="demo-slider"
+                    min="0"
+                    max="100"
+                    value="100"
+                    aria-label="WhatsApp volume"
+                  />
+                  <span id="val-whatsapp" class="demo-vol-val">100%</span>
+                  <button id="mute-whatsapp" class="demo-btn-mute" type="button" aria-label="Mute WhatsApp">
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon><line x1="23" y1="9" x2="17" y2="15"></line><line x1="17" y1="9" x2="23" y2="15"></line></svg>
+                  </button>
+                </div>
+              </div>
+
+              <!-- ChatGPT Voice Mode Row -->
+              <div id="row-chatgpt" class="demo-tab-row">
+                <img src="https://chatgpt.com/favicon.ico" alt="" class="demo-tab-icon" onerror="this.style.display='none'" />
+                <span class="demo-tab-title" title="ChatGPT – Advanced Voice Mode">ChatGPT – Advanced Voice Mode</span>
+                <div class="demo-slider-wrap">
+                  <input
+                    type="range"
+                    id="slider-chatgpt"
+                    class="demo-slider"
+                    min="0"
+                    max="100"
+                    value="50"
+                    aria-label="ChatGPT volume"
+                  />
+                  <span id="val-chatgpt" class="demo-vol-val">50%</span>
+                  <button id="mute-chatgpt" class="demo-btn-mute" type="button" aria-label="Mute ChatGPT">
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon><line x1="23" y1="9" x2="17" y2="15"></line><line x1="17" y1="9" x2="23" y2="15"></line></svg>
+                  </button>
+                </div>
+              </div>
             </div>
-            <div class="preview-row" style="opacity: 0.7;">
-              <span style="font-size: 13px; font-weight: 500; color: var(--text-muted);">Google Meet — Weekly Sync</span>
-              <span class="preview-vol" style="color: var(--text-muted);">100%</span>
+
+            <!-- Focus Presets Bar -->
+            <div class="focus-presets-bar">
+              <span class="focus-presets-label">Focus Modes:</span>
+              <button class="focus-preset-btn" type="button" data-preset="deep-focus">✨ Deep Focus</button>
+              <button class="focus-preset-btn" type="button" data-preset="study-lofi">📚 Study Lo-Fi</button>
+              <button class="focus-preset-btn" type="button" data-preset="meeting-mode">🎙️ Meeting Mode</button>
+              <button class="focus-preset-btn" type="button" data-preset="reset">↺ Reset</button>
             </div>
+
+            <!-- Feedback Notice -->
+            <div id="demo-focus-notice" class="demo-focus-notice" role="status" aria-live="polite"></div>
           </div>
         </div>
       </section>
@@ -372,6 +535,76 @@
         </div>
       </section>
 
+      <!-- Comparison Section -->
+      <section id="comparison" class="section-wrap">
+        <div class="container">
+          <div class="section-head">
+            <p class="section-tag">Acoustic Advantage</p>
+            <h2 class="section-title">Why Use Hush?</h2>
+            <p class="section-desc">
+              How Hush delivers a superior audio listening experience compared to standard Chrome and generic extensions.
+            </p>
+          </div>
+
+          <div class="glass-card comparison-table-wrap">
+            <table class="comparison-table">
+              <thead>
+                <tr>
+                  <th scope="col">Feature Capability</th>
+                  <th scope="col" class="col-hush">Hush (This Extension)</th>
+                  <th scope="col">Native Chrome</th>
+                  <th scope="col">Generic Volume Boosters</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td><strong>Independent Tab Volume (0–100%)</strong></td>
+                  <td class="col-hush">✅ Precision scrub &amp; wheel control</td>
+                  <td>❌ All-or-nothing tab mute only</td>
+                  <td>⚠️ Coarse volume or whole-window</td>
+                </tr>
+                <tr>
+                  <td><strong>Web Audio API Interception</strong></td>
+                  <td class="col-hush">✅ Main-world smoothed GainNode</td>
+                  <td>❌ None</td>
+                  <td>❌ HTML5 video tags only</td>
+                </tr>
+                <tr>
+                  <td><strong>Master Category Audio Sliders</strong></td>
+                  <td class="col-hush">✅ Yes (Entertainment, Work, Study)</td>
+                  <td>❌ None</td>
+                  <td>❌ None</td>
+                </tr>
+                <tr>
+                  <td><strong>Audio Clipping / Pop Prevention</strong></td>
+                  <td class="col-hush">✅ setTargetAtTime smoothing</td>
+                  <td>N/A</td>
+                  <td>❌ Harsh digital clipping &amp; distortion</td>
+                </tr>
+                <tr>
+                  <td><strong>Native Tab Group Sync</strong></td>
+                  <td class="col-hush">✅ 1-Click chrome.tabGroups sync</td>
+                  <td>Manual drag only</td>
+                  <td>❌ None</td>
+                </tr>
+                <tr>
+                  <td><strong>Privacy &amp; Telemetry</strong></td>
+                  <td class="col-hush">🛡️ 100% Local (Zero network requests)</td>
+                  <td>Google Telemetry</td>
+                  <td>⚠️ Injected ads / data tracking</td>
+                </tr>
+                <tr>
+                  <td><strong>Memory &amp; Performance Engine</strong></td>
+                  <td class="col-hush">⚡ react-fastload tiered scheduling</td>
+                  <td>Native</td>
+                  <td>⚠️ High CPU audio hooks</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </section>
+
       <!-- FAQ Section -->
       <section id="faq" class="section-wrap">
         <div class="container">
@@ -384,32 +617,52 @@
           </div>
 
           <div class="faq-grid">
-            <div class="faq-card glass-card">
-              <h3>Does Hush collect or send my browsing data?</h3>
-              <p>
-                No. Hush operates entirely client-side. There are no remote servers, analytics, or trackers. All volume settings and category overrides are stored locally via <code>chrome.storage.local</code>.
-              </p>
+            <div class="faq-card glass-card is-open">
+              <button class="faq-accordion-header" type="button" aria-expanded="true">
+                <h3>Does Hush collect or transmit any of my browsing data?</h3>
+                <svg class="faq-chevron" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg>
+              </button>
+              <div class="faq-accordion-content">
+                <p>
+                  No. Hush operates 100% client-side. There are zero remote servers, zero analytics APIs, and zero tracking cookies. All volume settings, focus preferences, and category overrides are persisted locally on your machine via <code>chrome.storage.local</code>.
+                </p>
+              </div>
             </div>
 
             <div class="faq-card glass-card">
-              <h3>Can Hush adjust sound on sites using Web Audio API?</h3>
-              <p>
-                Yes. Hush uses a dual-engine architecture: it controls HTML5 media elements and injects a master <code>GainNode</code> hook directly into page audio contexts before <code>destination</code>.
-              </p>
+              <button class="faq-accordion-header" type="button" aria-expanded="false">
+                <h3>How does Hush adjust volume on Web Audio API applications?</h3>
+                <svg class="faq-chevron" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg>
+              </button>
+              <div class="faq-accordion-content">
+                <p>
+                  Hush injects a light, high-performance main-world hook into the tab's <code>AudioContext</code> and <code>webkitAudioContext</code> pipelines. A master <code>GainNode</code> is interposed before <code>destination</code>, applying exponential transitions (<code>setTargetAtTime</code>) to eliminate popping sounds and audio degradation.
+                </p>
+              </div>
             </div>
 
             <div class="faq-card glass-card">
-              <h3>Why does Hush request the <code>tabs</code> permission?</h3>
-              <p>
-                The <code>tabs</code> permission is required to list open tab titles, favicons, and audible status in the popup, and to focus a specific tab when you click on it in the Now Playing HUD.
-              </p>
+              <button class="faq-accordion-header" type="button" aria-expanded="false">
+                <h3>Why does Hush request the <code>tabs</code> permission?</h3>
+                <svg class="faq-chevron" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg>
+              </button>
+              <div class="faq-accordion-content">
+                <p>
+                  The <code>tabs</code> permission is required to list open tab titles, read favicons, inspect audible status, and activate or switch to a specific tab when clicked in the Now Playing HUD.
+                </p>
+              </div>
             </div>
 
             <div class="faq-card glass-card">
-              <h3>Is Hush compatible with all Chromium browsers?</h3>
-              <p>
-                Yes. Hush is built to the Manifest V3 standard and works across Google Chrome, Brave, Microsoft Edge, Arc, and other Chromium-based browsers.
-              </p>
+              <button class="faq-accordion-header" type="button" aria-expanded="false">
+                <h3>Is Hush compatible with all Chromium browsers?</h3>
+                <svg class="faq-chevron" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg>
+              </button>
+              <div class="faq-accordion-content">
+                <p>
+                  Yes. Hush is fully built to the Manifest V3 standard and works identically on Google Chrome, Brave, Microsoft Edge, Arc, Opera, and other modern Chromium browsers.
+                </p>
+              </div>
             </div>
           </div>
         </div>
@@ -422,7 +675,9 @@
         <p>© 2026 Abhishek Kumar Pundir. Released under the MIT License.</p>
         <div class="footer-links">
           <a href="#features">Features</a>
+          <a href="#sandbox">Sandbox</a>
           <a href="#shortcuts">Shortcuts</a>
+          <a href="#comparison">Why Hush</a>
           <a href="privacy.html">Privacy Policy</a>
           <a
             href="https://github.com/abhishek-kumar-pundir/Hush"
@@ -434,5 +689,8 @@
         </div>
       </div>
     </footer>
+
+    <!-- Interactive Web Playground Script -->
+    <script src="playground.js"></script>
   </body>
 </html>

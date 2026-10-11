@@ -1,0 +1,104 @@
+/* ==========================================================================
+   Hush Website — Global Design Tokens & Reset
+   Deep obsidian palette with periwinkle/chrome accents
+   ========================================================================== */
+
+:root {
+  /* Core palette */
+  --hush-bg: #050608;
+  --hush-bg-deep: #020304;
+  --hush-surface: rgba(18, 20, 28, 0.7);
+  --hush-surface-hover: rgba(24, 27, 38, 0.8);
+
+  /* Text */
+  --hush-text: #eff1f8;
+  --hush-text-secondary: #9da2ba;
+  --hush-text-muted: #5c6078;
+
+  /* Brand accent: periwinkle */
+  --hush-accent: #b6b8d0;
+  --hush-accent-bright: #cbd0ec;
+  --hush-accent-dim: rgba(182, 184, 208, 0.15);
+  --hush-accent-glow: rgba(182, 184, 208, 0.35);
+
+  /* Signal colors */
+  --hush-live: #7be0ca;
+  --hush-live-glow: rgba(123, 224, 202, 0.4);
+  --hush-muted-signal: #e28d98;
+  --hush-violet: #8b7ec8;
+  --hush-violet-glow: rgba(139, 126, 200, 0.35);
+
+  /* Typography */
+  --font-display: 'Space Grotesk', 'Inter', system-ui, sans-serif;
+  --font-body: 'Inter', system-ui, -apple-system, sans-serif;
+
+  /* Spacing */
+  --section-gap: 0;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  scroll-behavior: auto; /* GSAP handles smooth scroll */
+  overflow-x: hidden;
+}
+
+body {
+  font-family: var(--font-body);
+  background: var(--hush-bg);
+  color: var(--hush-text);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  overflow-x: hidden;
+}
+
+#root {
+  min-height: 100vh;
+  position: relative;
+}
+
+a {
+  color: var(--hush-accent-bright);
+  text-decoration: none;
+  transition: color 0.2s ease;
+}
+
+a:hover {
+  color: #fff;
+}
+
+button {
+  font-family: inherit;
+  cursor: pointer;
+  border: none;
+  background: none;
+  color: inherit;
+}
+
+:focus-visible {
+  outline: 2px solid var(--hush-accent);
+  outline-offset: 3px;
+}
+
+/* Selection */
+::selection {
+  background: rgba(182, 184, 208, 0.3);
+  color: #fff;
+}
+
+/* Reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}

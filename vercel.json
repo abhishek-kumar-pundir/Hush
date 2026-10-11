@@ -1,0 +1,11 @@
+{
+  "version": 2,
+  "buildCommand": "cd website && npm install && npm run build",
+  "outputDirectory": "website/dist",
+  "installCommand": "echo skip",
+  "framework": "vite",
+  "cleanUrls": true,
+  "rewrites": [
+    { "source": "/privacy", "destination": "/privacy.html" }
+  ]
+}

@@ -135,6 +135,18 @@ function App() {
 
   const [followCurrentTab, setFollowCurrentTab] = useState(true)
 
+  const [controlsHoveredTab, setControlsHoveredTab] = useState<number | 'current' | null>(null);
+  const lastPointerDownTarget = React.useRef<HTMLElement | null>(null);
+
+  // Capture the exact origin element of any pointerdown to reliably distinguish slider clicks from row drags
+  useEffect(() => {
+    const handleCapturePointerDown = (e: PointerEvent) => {
+      lastPointerDownTarget.current = e.target as HTMLElement;
+    };
+    window.addEventListener('pointerdown', handleCapturePointerDown, { capture: true });
+    return () => window.removeEventListener('pointerdown', handleCapturePointerDown, { capture: true });
+  }, []);
+
   const scrollContainerRef = React.useRef<HTMLDivElement>(null);
   const topZoneRef = React.useRef<HTMLDivElement>(null);
   const bottomZoneRef = React.useRef<HTMLDivElement>(null);
@@ -411,6 +423,20 @@ function App() {
   }
 
   const handleDragStart = (e: React.DragEvent, tab: chrome.tabs.Tab) => {
+    const target = e.target as HTMLElement;
+    const originTarget = lastPointerDownTarget.current;
+
+    // Prevent drag initiation when interaction began on a slider, control, button, or input
+    if (
+      target.tagName === 'INPUT' || 
+      target.closest('input, .slider, .slider-wrapper, .cc-vol-controls, .ct-controls, button, .btn-mute, .follow-toggle') ||
+      originTarget?.tagName === 'INPUT' ||
+      originTarget?.closest('input, .slider, .slider-wrapper, .cc-vol-controls, .ct-controls, button, .btn-mute, .follow-toggle')
+    ) {
+      e.preventDefault();
+      return;
+    }
+
     e.dataTransfer.setData('text/plain', tab.id?.toString() || '');
     setDraggedTab(tab);
     
@@ -583,7 +609,7 @@ function App() {
               <div className="section-label">Current Tab</div>
               <div 
                 className={`current-tab-card ${draggedTab?.id === currentTab.id ? 'is-ghosted' : ''}`}
-                draggable
+                draggable={controlsHoveredTab !== 'current'}
                 onDragStart={(e) => handleDragStart(e, currentTab)}
                 onDragEnd={handleDragEnd}
                 title="Drag to reassign category"
@@ -614,10 +640,24 @@ function App() {
                   </div>
                 </div>
 
-                <div className="ct-controls">
+                <div 
+                  className="ct-controls"
+                  onMouseEnter={() => setControlsHoveredTab('current')}
+                  onMouseLeave={() => setControlsHoveredTab(null)}
+                  onPointerDown={(e) => {
+                    e.stopPropagation();
+                    setControlsHoveredTab('current');
+                  }}
+                >
                   <div className="ct-vol-row">
                     <span className="ct-vol-label">Volume</span>
-                    <div className="slider-wrapper">
+                    <div 
+                      className="slider-wrapper"
+                      draggable={false}
+                      onDragStart={(e) => { e.preventDefault(); e.stopPropagation(); }}
+                      onMouseDown={(e) => e.stopPropagation()}
+                      onPointerDown={(e) => e.stopPropagation()}
+                    >
                       <input 
                         type="range" 
                         min="0" max="1" step="0.01" 
@@ -626,6 +666,9 @@ function App() {
                         onKeyDown={(e) => handleSliderKeyDown(e, currentTab.id!, tVol)}
                         onWheel={(e) => handleSliderWheel(e, currentTab.id!, tVol)}
                         onMouseDown={(e) => e.stopPropagation()}
+                        onPointerDown={(e) => e.stopPropagation()}
+                        draggable={false}
+                        onDragStart={(e) => { e.preventDefault(); e.stopPropagation(); }}
                         className="slider"
                         aria-label={`Volume for ${currentTab.title || 'current tab'}`}
                       />
@@ -779,7 +822,7 @@ function App() {
                           <div 
                             key={tab.id} 
                             className={`cc-row ${isGhosted ? 'is-ghosted' : ''}`}
-                            draggable
+                            draggable={controlsHoveredTab !== tab.id}
                             onDragStart={(e) => handleDragStart(e, tab)}
                             onDragEnd={handleDragEnd}
                             title="Drag to reassign category"
@@ -799,7 +842,18 @@ function App() {
                               />
                             )}
                             <div className="cc-title" title={tab.title}>{tab.title}</div>
-                            <div className="cc-vol-controls">
+                            <div 
+                              className="cc-vol-controls"
+                              draggable={false}
+                              onMouseEnter={() => setControlsHoveredTab(tab.id!)}
+                              onMouseLeave={() => setControlsHoveredTab(null)}
+                              onDragStart={(e) => { e.preventDefault(); e.stopPropagation(); }}
+                              onMouseDown={(e) => e.stopPropagation()}
+                              onPointerDown={(e) => {
+                                e.stopPropagation();
+                                setControlsHoveredTab(tab.id!);
+                              }}
+                            >
                               <div className="cc-eff-vol">
                                 {isAudible ? (
                                   <span title="Audio playing"><Volume2 size={12} className="text-playing" /></span>
@@ -813,7 +867,18 @@ function App() {
                                 min="0" max="1" step="0.01" 
                                 value={tVol}
                                 onChange={(e) => handleTabVolume(tab.id!, parseFloat(e.target.value))}
-                                onMouseDown={(e) => e.stopPropagation()}
+                                onKeyDown={(e) => handleSliderKeyDown(e, tab.id!, tVol)}
+                                onWheel={(e) => handleSliderWheel(e, tab.id!, tVol)}
+                                onMouseDown={(e) => {
+                                  e.stopPropagation();
+                                  setControlsHoveredTab(tab.id!);
+                                }}
+                                onPointerDown={(e) => {
+                                  e.stopPropagation();
+                                  setControlsHoveredTab(tab.id!);
+                                }}
+                                draggable={false}
+                                onDragStart={(e) => { e.preventDefault(); e.stopPropagation(); }}
                                 className="slider tab-slider"
                                 aria-label={`Volume for ${tab.title || 'tab'}`}
                               />
