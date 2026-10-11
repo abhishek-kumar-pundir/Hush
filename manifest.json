@@ -1,17 +1,24 @@
 {
   "manifest_version": 3,
-  "name": "TabSound",
+  "name": "Hush",
   "version": "1.0.0",
-  "description": "Control, organize, and automate the sound of every tab.",
+  "description": "Per-tab audio control, intelligent tab organization, and focus modes for a quieter browser.",
   "action": {
     "default_popup": "index.html",
-    "default_icon": "favicon.svg"
+    "default_icon": {
+      "16": "icon-16.png",
+      "19": "icon-19.png",
+      "32": "icon-32.png",
+      "38": "icon-38.png",
+      "48": "icon-48.png",
+      "128": "icon-128.png"
+    }
   },
   "icons": {
-    "16": "favicon.svg",
-    "32": "favicon.svg",
-    "48": "favicon.svg",
-    "128": "favicon.svg"
+    "16": "icon-16.png",
+    "32": "icon-32.png",
+    "48": "icon-48.png",
+    "128": "icon-128.png"
   },
   "background": {
     "service_worker": "src/background.ts",

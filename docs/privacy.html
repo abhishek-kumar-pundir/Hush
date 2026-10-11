@@ -1,0 +1,123 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Privacy Policy — Hush (Chrome Tab Volume Control)</title>
+    <meta name="description" content="Privacy Policy for Hush Chrome Extension. Hush operates entirely client-side, stores data locally, and collects zero personal data, analytics, or browsing history." />
+    <link rel="canonical" href="https://abhishek-kumar-pundir.github.io/Hush/privacy.html" />
+    <meta name="robots" content="index, follow" />
+
+    <!-- Open Graph -->
+    <meta property="og:title" content="Privacy Policy — Hush (Chrome Tab Volume Control)" />
+    <meta property="og:description" content="Hush operates entirely client-side and collects zero personal data or browsing history." />
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://abhishek-kumar-pundir.github.io/Hush/privacy.html" />
+    <meta property="og:image" content="https://abhishek-kumar-pundir.github.io/Hush/og-image.png" />
+
+    <!-- Favicons -->
+    <link rel="icon" type="image/png" sizes="32x32" href="icon-32.png" />
+    <link rel="icon" type="image/png" sizes="16x16" href="icon-16.png" />
+    <link rel="icon" type="image/svg+xml" href="favicon.svg" />
+
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <header class="site-header">
+      <div class="nav-container">
+        <a href="index.html" class="logo-link" aria-label="Hush Home">
+          <img src="icon-48.png" width="32" height="32" alt="Hush Icon" class="logo-orb" />
+          <div class="logo-text">
+            <span class="logo-name">Hush</span>
+            <span class="logo-tag">AUDIO</span>
+          </div>
+        </a>
+        <nav class="nav-links">
+          <a href="index.html">Overview</a>
+          <a href="index.html#features">Features</a>
+          <a href="index.html#faq">FAQ</a>
+          <a href="https://github.com/abhishek-kumar-pundir/Hush" target="_blank" rel="noopener noreferrer">GitHub</a>
+        </nav>
+      </div>
+    </header>
+
+    <main class="page-main">
+      <article class="privacy-container glass-card">
+        <h1>Privacy Policy for Hush</h1>
+        <p class="privacy-updated">Effective date: October 11, 2026 · Version 1.0.0</p>
+
+        <section>
+          <h2>Summary</h2>
+          <p>
+            <strong>Hush is built with a strict privacy-first architecture.</strong> Hush does not collect, transmit, sell, or monetize any user data, browsing history, audio streams, or personal identifiers. The extension executes 100% locally on your computer inside your Chromium browser.
+          </p>
+        </section>
+
+        <section>
+          <h2>Information We Do Not Collect</h2>
+          <ul>
+            <li><strong>No personal identifiable information (PII):</strong> We do not ask for or collect names, email addresses, IP addresses, or device identifiers.</li>
+            <li><strong>No browsing history tracking:</strong> We do not monitor, log, or transmit the websites you visit or the audio/video media you play.</li>
+            <li><strong>No audio interception eavesdropping:</strong> Volume gains are adjusted locally via the browser's native Web Audio API and HTML5 media elements. No audio samples are ever recorded, analyzed, or sent over a network.</li>
+            <li><strong>No third-party analytics or trackers:</strong> There are no Google Analytics, telemetry libraries, ad trackers, or third-party tracking scripts bundled in Hush.</li>
+          </ul>
+        </section>
+
+        <section>
+          <h2>Permissions & Justification</h2>
+          <p>Hush requests only the permissions strictly required to provide individual tab volume control and tab organization:</p>
+          <div class="perm-grid">
+            <div class="perm-card">
+              <h3><code>tabs</code></h3>
+              <p>Used to read tab titles, URLs, favicons, and mute states to present them in the popup interface, allow jumping to audible tabs, and apply volume settings.</p>
+            </div>
+            <div class="perm-card">
+              <h3><code>storage</code></h3>
+              <p>Used to save your volume levels (0% to 100%) and custom category overrides locally on your device via <code>chrome.storage.local</code> so they persist when you restart Chrome.</p>
+            </div>
+            <div class="perm-card">
+              <h3><code>tabGroups</code></h3>
+              <p>Used strictly when you click "Organize tabs" to bundle loose browser tabs into native, color-coded Chrome Tab Groups.</p>
+            </div>
+          </div>
+        </section>
+
+        <section>
+          <h2>Data Storage</h2>
+          <p>
+            All preferences (per-tab volume, group volumes, and custom category assignments) are stored solely in your local browser sandbox through the Chrome Storage API (<code>chrome.storage.local</code>). This data never leaves your computer.
+          </p>
+        </section>
+
+        <section>
+          <h2>Open Source Transparency</h2>
+          <p>
+            Hush is an open-source project licensed under the MIT License. The entire source code is publicly inspectable and auditable on GitHub:
+          </p>
+          <p>
+            <a href="https://github.com/abhishek-kumar-pundir/Hush" class="btn-link" target="_blank" rel="noopener noreferrer">View Source on GitHub →</a>
+          </p>
+        </section>
+
+        <section>
+          <h2>Contact</h2>
+          <p>
+            If you have questions, concerns, or security inquiries regarding this privacy policy, please open an issue on the official GitHub repository:
+            <a href="https://github.com/abhishek-kumar-pundir/Hush/issues" target="_blank" rel="noopener noreferrer">github.com/abhishek-kumar-pundir/Hush/issues</a>.
+          </p>
+        </section>
+      </article>
+    </main>
+
+    <footer class="site-footer">
+      <div class="footer-container">
+        <p>© 2026 Abhishek Kumar Pundir. Released under the MIT License.</p>
+        <div class="footer-links">
+          <a href="index.html">Home</a>
+          <a href="privacy.html">Privacy Policy</a>
+          <a href="https://github.com/abhishek-kumar-pundir/Hush" target="_blank" rel="noopener noreferrer">GitHub</a>
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>

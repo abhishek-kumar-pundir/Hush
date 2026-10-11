@@ -1,5 +1,5 @@
-// TabSound Content Script
-console.log('TabSound Content Script Injected');
+// Hush Content Script
+console.log('[Hush] Content Script Injected');
 
 function getMediaElements() {
   return Array.from(document.querySelectorAll<HTMLMediaElement>('audio, video'));
@@ -17,10 +17,10 @@ function applyVolume() {
   }
   
   try {
-    window.dispatchEvent(new CustomEvent('TabSoundVolumeChange', {
+    window.dispatchEvent(new CustomEvent('HushVolumeChange', {
       detail: { volume: targetVolume }
     }));
-  } catch (e) {}
+  } catch {}
 }
 
 // Debounce helper
@@ -60,8 +60,8 @@ try {
       observer.observe(document.documentElement, { childList: true, subtree: true });
     });
   }
-} catch (e) {
-  console.error("TabSound Observer Error:", e);
+} catch (err) {
+  console.error('[Hush] Observer Error:', err);
 }
 
 // Listen for messages from the background script

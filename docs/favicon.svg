@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 32 32" fill="none">
+  <!-- Hush: Quieter Browser. Five-bar sound waveform on deep graphite sanctuary -->
+  <rect width="32" height="32" rx="7.5" fill="#1D211E" stroke="#303731" stroke-width="1.2" />
+  <rect x="6.5" y="13" width="2.4" height="6" rx="1.2" fill="#B6B8D0" />
+  <rect x="10.5" y="9.5" width="2.4" height="13" rx="1.2" fill="#B6B8D0" />
+  <rect x="14.8" y="6" width="2.4" height="20" rx="1.2" fill="#B6B8D0" />
+  <rect x="19.1" y="9.5" width="2.4" height="13" rx="1.2" fill="#B6B8D0" />
+  <rect x="23.1" y="13" width="2.4" height="6" rx="1.2" fill="#B6B8D0" />
+</svg>

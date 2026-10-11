@@ -22,23 +22,21 @@ import {
 import { SmartImage } from 'react-fastload'
 import './App.css'
 
-function StillnessIcon({ size = 20, className = '' }: { size?: number; className?: string }) {
+function HushIcon({ size = 28, className = '' }: { size?: number; className?: string }) {
   return (
-    <svg
+    <img
+      src="/icon-48.png"
       width={size}
       height={size}
-      viewBox="0 0 32 32"
-      fill="none"
-      xmlns="http://www.w3.org/2000/svg"
       className={className}
-      aria-hidden="true"
-    >
-      <rect width="32" height="32" rx="8" fill="var(--ts-surface)" stroke="var(--ts-border)" strokeWidth="1.5" />
-      <rect x="7.5" y="11" width="2.5" height="10" rx="1.25" fill="var(--ts-accent)" />
-      <rect x="12" y="6.5" width="2.5" height="19" rx="1.25" fill="var(--ts-accent)" />
-      <rect x="16.5" y="9" width="2.5" height="14" rx="1.25" fill="var(--ts-accent)" />
-      <rect x="21" y="12" width="2.5" height="8" rx="1.25" fill="var(--ts-accent)" />
-    </svg>
+      alt="Hush"
+      style={{
+        borderRadius: '50%',
+        flexShrink: 0,
+        display: 'block',
+        filter: 'drop-shadow(0 2px 8px rgba(182, 184, 208, 0.28))'
+      }}
+    />
   );
 }
 
@@ -219,20 +217,20 @@ function App() {
   useEffect(() => {
     const fetchData = () => {
       if (typeof chrome === 'undefined' || !chrome.tabs?.query) {
-        const mockTabGroups: chrome.tabGroups.TabGroup[] = [
+        const mockTabGroups = [
           { id: 101, title: 'Entertainment', color: 'red', collapsed: false, windowId: 1 },
           { id: 102, title: 'Study', color: 'green', collapsed: false, windowId: 1 }
-        ];
+        ] as unknown as chrome.tabGroups.TabGroup[];
         setChromeGroups(mockTabGroups);
 
-        const mockTabs: chrome.tabs.Tab[] = [
+        const mockTabs = [
           { id: 1, title: 'Spotify – Web Player', url: 'https://open.spotify.com/track/123', favIconUrl: 'https://open.spotify.com/favicon.ico', active: true, audible: true, windowId: 1, index: 0, pinned: false, highlighted: true, incognito: false, selected: true, discarded: false, autoDiscardable: true, groupId: -1 },
           { id: 2, title: '(92) YouTube – Lo-Fi Beats', url: 'https://www.youtube.com/watch?v=mock', favIconUrl: 'https://www.youtube.com/s/desktop/favicon.ico', active: false, audible: true, windowId: 1, index: 1, pinned: false, highlighted: false, incognito: false, selected: false, discarded: false, autoDiscardable: true, groupId: 101 },
           { id: 3, title: 'WhatsApp Web', url: 'https://web.whatsapp.com', favIconUrl: 'https://static.whatsapp.net/rsrc.php/v3/yP/r/rNTs2nH9YgB.png', active: false, audible: false, windowId: 1, index: 2, pinned: false, highlighted: false, incognito: false, selected: false, discarded: false, autoDiscardable: true, groupId: 101 },
-          { id: 4, title: 'frontend – GitHub', url: 'https://github.com/abhishek-kumar-pundir/TabSound', favIconUrl: 'https://github.githubassets.com/favicons/favicon.png', active: false, audible: false, windowId: 1, index: 3, pinned: false, highlighted: false, incognito: false, selected: false, discarded: false, autoDiscardable: true, groupId: 101 },
+          { id: 4, title: 'frontend – GitHub', url: 'https://github.com/abhishek-kumar-pundir/Hush', favIconUrl: 'https://github.githubassets.com/favicons/favicon.png', active: false, audible: false, windowId: 1, index: 3, pinned: false, highlighted: false, incognito: false, selected: false, discarded: false, autoDiscardable: true, groupId: 101 },
           { id: 5, title: 'Coursera – Machine Learning', url: 'https://www.coursera.org/learn/machine-learning', favIconUrl: 'https://d3njjcbhbojbot.cloudfront.net/web/images/favicons/favicon-v2-32x32.png', active: false, audible: false, windowId: 1, index: 4, pinned: false, highlighted: false, incognito: false, selected: false, discarded: false, autoDiscardable: true, groupId: 102 },
           { id: 6, title: 'Figma – Design System', url: 'https://www.figma.com/file/123', favIconUrl: 'https://static.figma.com/app/icon/1/favicon.png', active: false, audible: false, windowId: 1, index: 5, pinned: false, highlighted: false, incognito: false, selected: false, discarded: false, autoDiscardable: true, groupId: -1 },
-        ];
+        ] as unknown as chrome.tabs.Tab[];
         setTabs(mockTabs);
         setCurrentTab(mockTabs[0]);
         setAudibleTabs([mockTabs[0], mockTabs[1]]);
@@ -540,8 +538,14 @@ function App() {
       <div className={`container ${isDragging ? 'is-dragging' : ''}`} ref={scrollContainerRef}>
         <header className="app-header">
           <div className="logo-group">
-            <StillnessIcon size={22} className="brand-icon" />
-            <h1 className="app-wordmark">TabSound</h1>
+            <HushIcon size={28} className="brand-icon" />
+            <div className="brand-identity">
+              <div className="brand-title-row">
+                <span className="app-wordmark">Hush</span>
+                <span className="brand-badge">AUDIO</span>
+              </div>
+              <span className="brand-tagline">TAB ACOUSTICS</span>
+            </div>
           </div>
           <button
             className="btn-organize"
@@ -798,9 +802,9 @@ function App() {
                             <div className="cc-vol-controls">
                               <div className="cc-eff-vol">
                                 {isAudible ? (
-                                  <Volume2 size={12} className="text-playing" title="Audio playing" />
+                                  <span title="Audio playing"><Volume2 size={12} className="text-playing" /></span>
                                 ) : isMuted ? (
-                                  <VolumeX size={12} className="text-danger" title="Tab muted" />
+                                  <span title="Tab muted"><VolumeX size={12} className="text-danger" /></span>
                                 ) : null}
                                 <span>{effVol}%</span>
                               </div>
@@ -842,7 +846,7 @@ function App() {
 
               // Tabs opened in this focus grouping:
               const activeModeTabs = tabs.filter(t => !t.pinned && ((mode.volumes as any)[resolveTabCategory(t)] ?? 0) > 0);
-              const mutedModeTabs = tabs.filter(t => !t.pinned && mode.mutedCategories.includes(resolveTabCategory(t)));
+              const mutedModeTabs = tabs.filter(t => !t.pinned && (mode.mutedCategories as readonly Category[]).includes(resolveTabCategory(t)));
 
               return (
                 <div 

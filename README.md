@@ -1,6 +1,6 @@
-# 🎵 TabSound
+# Hush — Chrome Tab Volume Control & Audio Manager
 
-> **Control, organize, and automate the sound of every browser tab.**
+> **A quieter browser. Control volume for individual Chrome tabs, mute noisy background tabs, manage audio across browser windows, and organize tabs into native groups.**
 
 [![Manifest V3](https://img.shields.io/badge/Manifest-V3-success?style=flat-square&logo=googlechrome&logoColor=white)](https://developer.chrome.com/docs/extensions/mv3/intro/)
 [![React 19](https://img.shields.io/badge/React-19-61dafb?style=flat-square&logo=react&logoColor=black)](https://react.dev/)
@@ -9,39 +9,44 @@
 [![Powered by react-fastload](https://img.shields.io/badge/Powered%20by-react--fastload-ff4081?style=flat-square)](https://github.com/abhishek-kumar-pundir/react-fastload)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg?style=flat-square)](LICENSE)
 
----
-
-**TabSound** is a high-performance Chrome Extension (Manifest V3) that gives you full studio-grade acoustic control over your browser. Whether you have 5 or 150 tabs open, TabSound lets you independently control volume levels, mute noisy background tabs, group tabs by activity, enforce one-click Focus Modes, and seamlessly organize tabs into native Chrome Tab Groups.
-
-Powered by [**react-fastload**](https://github.com/abhishek-kumar-pundir/react-fastload), TabSound features an adaptive resource scheduler that eliminates tab congestion and keeps the popup lightning-fast, even in tab-heavy workflows.
+[**🌐 Live Website & Documentation**](https://abhishek-kumar-pundir.github.io/Hush/) • [**🔒 Privacy Policy**](https://abhishek-kumar-pundir.github.io/Hush/privacy.html) • [**📦 Installation Guide**](#-installation--loading-into-chrome)
 
 ---
 
-## ⚡ Highlights
+## 📖 Overview
 
-- **🎚️ Precision Per-Tab Volume**: Fine-tune the audio level of any specific tab from 0% to 100% with smooth slider response, keyboard stepping, and mouse wheel scrubbing.
+**Hush** is an open-source Chrome extension for individual tab volume control, browser audio management, and intelligent tab organization. Whether you have 5 or 150 tabs open, Hush lets you independently adjust the volume of any specific tab, instantly mute noisy background audio, organize open tabs into native color-coded Chrome Tab Groups, and enforce one-click Focus Modes.
+
+Built with a smoky glass interface matching its translucent glass orb identity, Hush combines visual restraint with studio-grade acoustics. Powered by [**react-fastload**](https://github.com/abhishek-kumar-pundir/react-fastload), Hush schedules favicon decoding and component rendering so the interface remains silky smooth even in tab-heavy workflows.
+
+---
+
+## ⚡ Highlights & Verified Features
+
+- **🎚️ Chrome Tab Volume Control**: Adjust the audio level of any specific browser tab from 0% to 100% with smooth slider response, keyboard stepping, and mouse-wheel scrubbing.
 - **🔊 Dual Audio Interception Engine**:
-  - **HTML5 Media**: Controls `<audio>` and `<video>` tags with zero delay.
-  - **Web Audio API**: Injects a master `GainNode` directly into page audio contexts before `destination`, ensuring full control over advanced web apps, DAWs, Spotify Web, and HTML5 games.
+  - **HTML5 Media**: Controls `<audio>` and `<video>` tags with zero latency.
+  - **Web Audio API**: Injects a master `GainNode` directly into page audio contexts before `destination`, ensuring full control over advanced web apps, DAWs, Spotify Web, and HTML5 games without audio distortion.
 - **📂 Smart Activity Categorization**: Automatically classifies tabs into 8 domains: *Entertainment*, *Music*, *Work*, *Study*, *Gaming*, *Communication*, *Social*, and *Other*.
-- **🎯 One-Click Focus Modes**: Instantly apply acoustic presets (*Study*, *Gaming*, *Meeting*) that lower distractions and prioritize essential audio.
-- **🔄 Drag & Drop Reclassification**: Drag tabs across categories with automated viewport autoscrolling zones and domain-level memory.
-- **📑 Native Chrome Tab Groups**: Organize cluttered windows into color-coded native Chrome Tab Groups with a single click.
-- **🚀 Powered by `react-fastload`**: Employs priority scheduling, deduplication, and viewport gating so tab favicons and components render efficiently without UI freezes or network bursts.
+- **🎯 One-Click Focus Modes**: Instantly apply acoustic presets (*Study*, *Gaming*, *Meeting*) with hover previews that lower distractions and prioritize essential audio.
+- **🔄 Drag & Drop Reclassification**: Drag tabs across categories with automated viewport autoscrolling zones and persistent domain-level memory.
+- **📑 Native Chrome Tab Groups**: Synchronizes with Chrome's native `chrome.tabGroups` API, grouping cluttered windows into color-coded groups with a single click.
+- **🚀 Powered by `react-fastload`**: Employs priority scheduling, deduplication, and viewport gating so tab favicons render efficiently without UI freezes or network bursts.
 - **⌨️ Global Shortcuts**: Toggle mute for the active tab anytime via `Alt+M` (`Cmd+Shift+M` on macOS).
+- **🎨 Smoky Glass Product Design**: Crafted with translucent frosted glass cards (`rgba(22, 26, 36, 0.68)`), midnight gradient backdrop (`#0B0D12`), luminous periwinkle accents (`#B6B8D0`), and soft cool-mint playback indicators (`#7BE0CA`).
 
 ---
 
 ## 🏗️ Architecture & Audio Interception
 
-Standard extensions often fail to adjust sound on websites that route audio through the Web Audio API rather than plain `<video>` or `<audio>` elements. TabSound solves this using a multi-tiered architecture:
+Standard browser extensions often fail to adjust sound on websites that route audio through the Web Audio API rather than plain `<video>` or `<audio>` elements. Hush solves this using a multi-tier Manifest V3 pipeline:
 
 ```mermaid
 flowchart TD
     Popup["🎨 React 19 Popup (UI)<br/>Scheduled via react-fastload"] -->|"chrome.runtime.sendMessage"| SW["⚙️ Background Service Worker<br/>(State, Rules & Grouping)"]
     SW -->|"chrome.storage.local"| Storage[("💾 Persistent State")]
     SW -->|"chrome.tabs.sendMessage"| CS["🛡️ Content Script (Isolated World)<br/>HTML5 Media Elements & Observers"]
-    CS -->|"window.dispatchEvent"| MW["🎛️ Main-World Hook (Page World)<br/>Web Audio API Master GainNode"]
+    CS -->|"window.dispatchEvent (HushVolumeChange)"| MW["🎛️ Main-World Hook (Page World)<br/>Web Audio API Master GainNode"]
     MW --> AudioDest["🔊 AudioDestinationNode"]
 ```
 
@@ -54,9 +59,9 @@ flowchart TD
 
 ## ⚡ Integration with `react-fastload`
 
-TabSound integrates [**`react-fastload`**](https://github.com/abhishek-kumar-pundir/react-fastload) — an adaptive resource-loading scheduler designed for React apps.
+Hush integrates [**`react-fastload`**](https://github.com/abhishek-kumar-pundir/react-fastload) — an adaptive resource-loading scheduler designed for React apps.
 
-### Why it makes TabSound better:
+### Why it makes Hush better:
 
 When users have 30, 60, or 100+ open browser tabs, rendering all tab icons simultaneously can cause heavy network bursts, favicon fetch queue contention, and layout jank.
 
@@ -66,7 +71,7 @@ With `react-fastload`:
   - `HIGH`: Audible "Now Playing" tabs receive accelerated priority.
   - `NORMAL`: Categorized tabs load with managed concurrency (capped at 6 simultaneous requests).
   - `LOW`: Mass previews in the Smart Organize modal defer until scrolled into view.
-- **Deduplication**: Multiple open tabs from the same origin (e.g. 10 YouTube videos or 5 GitHub repositories) share a single cached resource entry.
+- **Deduplication**: Multiple open tabs from the same origin (e.g., 10 YouTube videos or 5 GitHub repositories) share a single cached resource entry.
 - **Adaptive Concurrency**: Prevents the browser extension popup thread from bottlenecking on slow connections or metered networks.
 
 ```tsx
@@ -89,13 +94,13 @@ import { FastLoadProvider, SmartImage } from 'react-fastload';
 
 ---
 
-## 🎛️ Features in Detail
+## 🎛️ Detailed Features
 
 ### 1. Active Tab Card
-Displays the currently selected tab's title, origin, playing status, and a dedicated large volume slider. Includes a "Follow active tab" toggle to synchronize the card with whichever browser tab you switch to.
+Displays the currently selected tab's title, domain, playing status, and a dedicated large volume slider. Includes a "Follow active tab" toggle to synchronize the card with whichever browser tab you switch to.
 
 ### 2. Now Playing HUD
-An active badge and list showing every tab currently producing sound across your browser windows. Click any row to jump directly to that tab and bring its window to the foreground.
+An active list showing every tab currently producing sound across your browser windows. Click any row to jump directly to that tab and bring its window to the foreground.
 
 ### 3. Organized Tab Groups & Master Controls
 Tabs are grouped into activities:
@@ -113,64 +118,60 @@ Each category has a **Master Group Volume Slider**. Dropping the "Social" group 
 ### 4. Drag & Drop Reclassification
 Don't agree with a category? Grab any tab's grip handle and drop it into another category card.
 - **Auto-Scrolling**: Dragging towards the top or bottom of the popup activates automatic continuous scrolling zones.
-- **Domain Memory**: TabSound remembers your override for that domain for all future sessions.
+- **Domain Memory**: Hush remembers your override for that domain for all future sessions.
 
 ### 5. Focus Modes
 Quick toggle presets designed for common workflows:
+
 | Mode | Target Volumes | Muted Categories |
 | :--- | :--- | :--- |
 | **Study** | Study 100%, Work 50%, Music 20% | Social, Entertainment, Gaming |
 | **Gaming** | Gaming 100%, Comm 80%, Music 30% | Entertainment, Social, Study, Work |
 | **Meeting** | Comm 100% | Gaming, Music, Entertainment, Social, Study, Work, Other |
 
+Hovering over any Focus Mode button displays a live popover listing open tabs that will be active or muted in that preset.
+
 ### 6. Smart Organize
-Click the **Organize** button in the header to preview and group your loose browser tabs into native, color-coded Chrome Tab Groups using the `chrome.tabGroups` API.
+Click the **Organize tabs** button in the header to preview and group your loose browser tabs into native, color-coded Chrome Tab Groups using the `chrome.tabGroups` API.
 
 ---
 
 ## ⌨️ Keyboard & Mouse Controls
 
-- **Fine Adjustment**: Click any slider and press `Left Arrow` / `Down Arrow` (-1%) or `Right Arrow` / `Up Arrow` (+1%).
-- **Large Adjustment**: Hold `Shift` with Arrow keys (±10%).
-- **Mouse Wheel**: Hover over any slider and scroll up/down (±5% per notch).
-- **Mute Toggle**: Press `Alt+M` (Windows/Linux) or `Cmd+Shift+M` (macOS) to instantly mute or unmute the active tab without opening the popup.
+| Action | Windows & Linux | macOS | Description |
+| :--- | :--- | :--- | :--- |
+| **Mute Active Tab** | `Alt + M` | `Cmd + Shift + M` | Instantly mute/unmute the active tab without opening the popup. |
+| **Fine Volume Step** | `←` / `→` (or `↓` / `↑`) | `←` / `→` (or `↓` / `↑`) | Adjust focused volume slider by ±1%. |
+| **Large Volume Step** | `Shift + Arrow` | `Shift + Arrow` | Adjust focused volume slider by ±10%. |
+| **Mouse Wheel Scrub**| `Wheel Up / Down` | `Wheel Up / Down` | Hover over any slider to adjust by ±5%. |
 
 ---
 
-## 📦 Project Structure
+## 🔒 Permissions & Security
 
-```text
-Volume/
-├── manifest.json             # Manifest V3 configuration & permissions
-├── vite.config.ts            # Vite build configuration with @crxjs/vite-plugin
-├── package.json              # Dependencies (React 19, react-fastload, lucide-react)
-├── tsconfig.json             # TypeScript configuration
-├── public/                   # Static assets & icons
-└── src/
-    ├── main.tsx              # React entry point with FastLoadProvider
-    ├── App.tsx               # Main popup UI, sliders, drag-and-drop & focus modes
-    ├── App.css               # Design system, glassmorphism, animations & scroll zones
-    ├── background.ts         # Service worker: storage, tab events, tabGroups API
-    ├── content.ts            # Content script: HTML5 audio/video element interception
-    ├── main-world.ts         # Main-world script: Web Audio API GainNode monkey-patch
-    └── classifier.ts         # Domain classification rules & user override resolver
-```
+Hush requests only the permissions strictly required to provide individual tab volume control and tab organization:
+
+- **`tabs`**: Used to read tab titles, favicons, and audible status to present them in the popup, and to focus a specific tab when clicked in the Now Playing HUD.
+- **`storage`**: Used to persist your volume settings and custom category overrides locally on your device via `chrome.storage.local`.
+- **`tabGroups`**: Used strictly when you click "Organize tabs" to bundle loose browser tabs into native, color-coded Chrome Tab Groups.
+
+**Privacy Guarantee**: Hush operates 100% client-side. No personal data, browsing history, audio samples, or telemetry is ever collected, stored on remote servers, or transmitted. See our [Privacy Policy](https://abhishek-kumar-pundir.github.io/Hush/privacy.html) for details.
 
 ---
 
-## 🚀 Getting Started
+## 📥 Installation & Loading into Chrome
 
 ### Prerequisites
 - [Node.js](https://nodejs.org/) (version 18 or newer)
 - [npm](https://www.npmjs.com/) (or pnpm / yarn)
-- Google Chrome, Brave, Edge, or any Chromium-based browser
+- Google Chrome, Brave, Microsoft Edge, or any Chromium-based browser
 
-### Installation
+### Build from Source
 
 1. **Clone the repository**:
    ```bash
-   git clone https://github.com/abhishek-kumar-pundir/TabSound.git
-   cd TabSound
+   git clone https://github.com/abhishek-kumar-pundir/Hush.git
+   cd Hush
    ```
 
 2. **Install dependencies**:
@@ -193,21 +194,30 @@ Volume/
    npm run lint
    ```
 
----
-
-## 📥 Loading into Chrome
+### Load Unpacked into Chrome
 
 1. Open your Chromium browser and navigate to `chrome://extensions`.
 2. Toggle on **Developer mode** in the top-right corner.
 3. Click **Load unpacked** in the top-left corner.
-4. Select the `dist` directory generated by `npm run build` (or `npm run dev`).
-5. Pin **TabSound** to your browser toolbar and start managing your audio!
+4. Select the `dist` directory generated by `npm run build`.
+5. Pin **Hush** to your browser toolbar for quick access!
+
+---
+
+## 🏷️ Suggested GitHub Repository Topics
+
+To maximize discoverability on GitHub, add these topics to your repository settings (`About` → `⚙️ Topics`):
+
+```text
+chrome-extension, audio-control, tab-volume, tab-volume-control, audio-manager, web-audio-api, tab-groups, react19, vite, typescript, manifest-v3, productivity, focus-tool
+```
 
 ---
 
 ## 🛠️ Tech Stack & Dependencies
 
 - **Frontend**: [React 19](https://react.dev/)
+- **Typography**: [Inter (@fontsource/inter)](https://fontsource.org/fonts/inter)
 - **Resource Scheduler**: [react-fastload](https://github.com/abhishek-kumar-pundir/react-fastload)
 - **Extension Tooling**: [@crxjs/vite-plugin](https://crxjs.dev/vite-plugin)
 - **Icons**: [Lucide React](https://lucide.dev/)

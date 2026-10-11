@@ -1,47 +1,66 @@
 :root {
   /* ==========================================================================
-     TabSound: Stillness Design Tokens
-     Authoritative palette: Graphite, Muted Periwinkle, Cool Mint, Soft Ivory
+     Hush: Smoky Glass & Periwinkle Design Tokens
+     Matches the translucent glass orb aesthetic:
+     Deep smoky midnight backdrop, frosted glass surfaces, specular rims,
+     luminous periwinkle accents, and soft atmospheric glow.
      ========================================================================== */
-  --ts-bg: #121412;
-  --ts-surface: #1D211E;
-  --ts-surface-raised: #262B27;
-  --ts-border: #303731;
-  --ts-text: #E8E9E6;
-  --ts-text-secondary: #A8ADA6;
-  --ts-text-muted: #7F867D;
-  --ts-accent: #B6B8D0;
-  --ts-accent-hover: #C7C9DD;
-  --ts-accent-text: #20212A;
-  --ts-playing: #83BFA9;
-  --ts-playing-bg: #202E27;
-  --ts-danger: #D58E96;
-  --ts-focus: #C5C7DD;
+  --ts-bg: #0B0D12;
+  --ts-bg-gradient: radial-gradient(circle at 50% 0%, rgba(182, 184, 208, 0.08) 0%, rgba(11, 13, 18, 0.98) 72%), #0B0D12;
+  --ts-surface: rgba(22, 26, 36, 0.68);
+  --ts-surface-hover: rgba(28, 33, 46, 0.78);
+  --ts-surface-raised: rgba(32, 38, 52, 0.74);
+  --ts-surface-solid: #161A24;
+  --ts-border: rgba(182, 184, 208, 0.12);
+  --ts-border-strong: rgba(182, 184, 208, 0.22);
+  --ts-border-highlight: rgba(255, 255, 255, 0.12);
 
-  /* Typography: Inter sole interface typeface */
+  --ts-text: #EFF1F8;
+  --ts-text-secondary: #9DA2BA;
+  --ts-text-muted: #6C7188;
+
+  --ts-accent: #B6B8D0;
+  --ts-accent-hover: #CBD0EC;
+  --ts-accent-glow: rgba(182, 184, 208, 0.28);
+  --ts-accent-text: #11131C;
+
+  --ts-playing: #7BE0CA;
+  --ts-playing-bg: rgba(123, 224, 202, 0.12);
+  --ts-playing-glow: rgba(123, 224, 202, 0.45);
+
+  --ts-danger: #E28D98;
+  --ts-danger-bg: rgba(226, 141, 152, 0.14);
+
+  --ts-focus: rgba(182, 184, 208, 0.65);
+
+  /* Typography */
   --ts-font: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
 
-  /* Spacing Scale (4px increments) */
+  /* Spacing Scale (relaxed for breathability) */
   --ts-space-1: 4px;
   --ts-space-2: 8px;
   --ts-space-3: 12px;
   --ts-space-4: 16px;
   --ts-space-5: 20px;
+  --ts-space-6: 24px;
 
   /* Corner Radii */
   --ts-radius-sm: 6px;
-  --ts-radius-md: 8px;
-  --ts-radius-lg: 10px;
+  --ts-radius-md: 9px;
+  --ts-radius-lg: 12px;
+  --ts-radius-xl: 14px;
   --ts-radius-full: 9999px;
 
-  /* Shadows */
-  --ts-shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.35);
-  --ts-shadow-md: 0 4px 14px rgba(0, 0, 0, 0.45);
-  --ts-shadow-lg: 0 8px 24px rgba(0, 0, 0, 0.55);
+  /* Glass Shadows & Highlights */
+  --ts-glass-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.08), 0 8px 30px rgba(0, 0, 0, 0.42);
+  --ts-glass-shadow-hover: inset 0 1px 0 rgba(255, 255, 255, 0.15), 0 10px 36px rgba(0, 0, 0, 0.52);
+  --ts-shadow-sm: 0 2px 6px rgba(0, 0, 0, 0.35);
+  --ts-shadow-md: 0 6px 18px rgba(0, 0, 0, 0.45);
+  --ts-shadow-lg: 0 12px 36px rgba(0, 0, 0, 0.6);
 
   /* Transitions */
-  --ts-transition-fast: 0.15s ease;
-  --ts-transition-normal: 0.2s ease;
+  --ts-transition-fast: 0.15s cubic-bezier(0.16, 1, 0.3, 1);
+  --ts-transition-normal: 0.22s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 *, *::before, *::after {
@@ -51,11 +70,12 @@
 }
 
 html, body {
-  width: 380px;
-  height: 580px;
+  width: 400px;
+  height: 600px;
   margin: 0;
   padding: 0;
   background-color: var(--ts-bg);
+  background: var(--ts-bg-gradient);
   color: var(--ts-text);
   font-family: var(--ts-font);
   font-size: 13px;
@@ -73,7 +93,7 @@ html, body {
   display: flex;
   flex-direction: column;
   overflow: hidden;
-  background-color: var(--ts-bg);
+  background: transparent;
 }
 
 button, input {

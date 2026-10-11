@@ -1,6 +1,6 @@
 import { classifyUrl, type Category, CATEGORIES } from './classifier';
 
-console.log('TabSound Service Worker Initialized');
+console.log('[Hush] Service Worker Initialized');
 
 function cleanupDeadTabs() {
   chrome.tabs.query({}, (tabs) => {
@@ -8,7 +8,7 @@ function cleanupDeadTabs() {
     chrome.storage.local.get(['tabVolumes'], (state) => {
       if (!state.tabVolumes) return;
       let hasChanges = false;
-      const newTabVolumes = { ...state.tabVolumes } as Record<number, number>;
+      const newTabVolumes: Record<number, number> = Object.assign({}, state.tabVolumes as Record<number, number>);
       for (const tabIdStr in newTabVolumes) {
         if (!activeTabIds.has(Number(tabIdStr))) {
           delete newTabVolumes[tabIdStr];
@@ -121,7 +121,7 @@ chrome.runtime.onMessage.addListener((message, _sender, sendResponse) => {
     chrome.storage.local.get(['groupVolumes', 'categoryOverrides'], (state) => {
       const groupVolumes = (state.groupVolumes || defaultState.groupVolumes) as Record<Category, number>;
       const categoryOverrides = (state.categoryOverrides || {}) as Record<string, Category>;
-      const newGroupVolumes = { ...groupVolumes, ...volumes };
+      const newGroupVolumes: Record<Category, number> = Object.assign({}, groupVolumes, (volumes || {}) as Partial<Record<Category, number>>);
       chrome.storage.local.set({ groupVolumes: newGroupVolumes }, () => {
         chrome.tabs.query({}, (tabs) => {
           tabs.forEach(tab => {
@@ -158,14 +158,14 @@ chrome.runtime.onMessage.addListener((message, _sender, sendResponse) => {
                      if (new URL(tab.url).hostname.replace('www.', '') === hostname) {
                        applyEffectiveVolume(tab.id);
                      }
-                   } catch(e) {}
+                   } catch {}
                  }
               });
             });
             sendResponse({ success: true });
           });
         });
-      } catch(e) {
+      } catch {
         sendResponse({ success: false });
       }
     }
@@ -232,9 +232,9 @@ chrome.runtime.onMessage.addListener((message, _sender, sendResponse) => {
             try {
               let groupId = categoryToGroupId[category];
               if (groupId !== undefined) {
-                await chrome.tabs.group({ tabIds: tabIds as [number, ...number[]], groupId });
+                await chrome.tabs.group({ tabIds: tabIds as any, groupId });
               } else {
-                groupId = await chrome.tabs.group({ tabIds: tabIds as [number, ...number[]] });
+                groupId = await chrome.tabs.group({ tabIds: tabIds as any });
                 await chrome.tabGroups.update(groupId, {
                   title: category,
                   color: (CATEGORY_COLORS as any)[category] || 'grey'

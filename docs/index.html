@@ -1,0 +1,438 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Hush — Chrome Tab Volume Control & Audio Manager</title>
+    <meta
+      name="description"
+      content="Control individual tab volume, mute noisy browser tabs, manage audio, and organize your Chrome workspace with Hush."
+    />
+    <meta
+      name="keywords"
+      content="Hush Chrome extension, Hush tab volume control, Chrome tab volume control, Control volume for individual Chrome tabs, Chrome audio manager, individual tab volume controller, manage audio across browser tabs, mute and adjust Chrome tabs independently, Chrome tab organizer, focus tools for Chrome"
+    />
+    <meta name="author" content="Abhishek Kumar Pundir" />
+    <link rel="canonical" href="https://abhishek-kumar-pundir.github.io/Hush/" />
+    <meta name="robots" content="index, follow" />
+
+    <!-- Open Graph Metadata -->
+    <meta property="og:site_name" content="Hush" />
+    <meta property="og:title" content="Hush — Chrome Tab Volume Control & Audio Manager" />
+    <meta
+      property="og:description"
+      content="Control individual tab volume, mute noisy browser tabs, manage audio, and organize your Chrome workspace with Hush."
+    />
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://abhishek-kumar-pundir.github.io/Hush/" />
+    <meta property="og:image" content="https://abhishek-kumar-pundir.github.io/Hush/og-image.png" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:image:alt" content="Hush Chrome Tab Volume Control & Audio Manager preview" />
+
+    <!-- Twitter Card Metadata -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="Hush — Chrome Tab Volume Control & Audio Manager" />
+    <meta
+      name="twitter:description"
+      content="Control individual tab volume, mute noisy browser tabs, manage audio, and organize your Chrome workspace with Hush."
+    />
+    <meta name="twitter:image" content="https://abhishek-kumar-pundir.github.io/Hush/og-image.png" />
+
+    <!-- Favicons & Icons -->
+    <link rel="icon" type="image/png" sizes="32x32" href="icon-32.png" />
+    <link rel="icon" type="image/png" sizes="16x16" href="icon-16.png" />
+    <link rel="icon" type="image/svg+xml" href="favicon.svg" />
+    <link rel="apple-touch-icon" sizes="128x128" href="icon-128.png" />
+
+    <link rel="stylesheet" href="style.css" />
+
+    <!-- JSON-LD Structured Data -->
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@graph": [
+          {
+            "@type": "WebSite",
+            "@id": "https://abhishek-kumar-pundir.github.io/Hush/#website",
+            "url": "https://abhishek-kumar-pundir.github.io/Hush/",
+            "name": "Hush",
+            "description": "Chrome Tab Volume Control & Audio Manager",
+            "publisher": {
+              "@type": "Person",
+              "name": "Abhishek Kumar Pundir",
+              "url": "https://github.com/abhishek-kumar-pundir"
+            }
+          },
+          {
+            "@type": "SoftwareApplication",
+            "@id": "https://abhishek-kumar-pundir.github.io/Hush/#software",
+            "name": "Hush",
+            "operatingSystem": "Chromium, Google Chrome, Brave, Microsoft Edge",
+            "applicationCategory": "MultimediaApplication",
+            "applicationSubCategory": "Browser Extension",
+            "offers": {
+              "@type": "Offer",
+              "price": "0",
+              "priceCurrency": "USD"
+            },
+            "softwareVersion": "1.0.0",
+            "description": "Hush is an open-source Chrome extension for controlling individual tab volume, managing audio across browser tabs, grouping tabs by activity, and enforcing focus modes.",
+            "url": "https://abhishek-kumar-pundir.github.io/Hush/",
+            "author": {
+              "@type": "Person",
+              "name": "Abhishek Kumar Pundir",
+              "url": "https://github.com/abhishek-kumar-pundir"
+            }
+          }
+        ]
+      }
+    </script>
+  </head>
+  <body>
+    <!-- Header -->
+    <header class="site-header">
+      <div class="nav-container">
+        <a href="index.html" class="logo-link" aria-label="Hush Home">
+          <img src="icon-48.png" width="32" height="32" alt="Hush Icon" class="logo-orb" />
+          <div class="logo-text">
+            <span class="logo-name">Hush</span>
+            <span class="logo-tag">AUDIO</span>
+          </div>
+        </a>
+        <nav class="nav-links" aria-label="Main Navigation">
+          <a href="#features">Features</a>
+          <a href="#architecture">Audio Engine</a>
+          <a href="#shortcuts">Shortcuts</a>
+          <a href="#faq">FAQ</a>
+          <a href="privacy.html">Privacy</a>
+          <a
+            href="https://github.com/abhishek-kumar-pundir/Hush"
+            class="nav-cta"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            GitHub
+          </a>
+        </nav>
+      </div>
+    </header>
+
+    <main>
+      <!-- Hero Section -->
+      <section class="hero">
+        <div class="container">
+          <div class="hero-pill">
+            <span class="pulse-dot"></span>
+            <span>A quieter browser · Manifest V3</span>
+          </div>
+
+          <h1 class="hero-title">
+            Hush — Chrome Tab Volume Control & Audio Manager
+          </h1>
+
+          <p class="hero-subtitle">
+            Control volume for individual Chrome tabs, mute noisy background tabs with zero latency, organize tabs into native groups, and focus with one-click presets.
+          </p>
+
+          <div class="hero-actions">
+            <a
+              href="https://github.com/abhishek-kumar-pundir/Hush"
+              class="btn-primary"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                <path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/>
+              </svg>
+              <span>View Source on GitHub</span>
+            </a>
+            <a href="#installation" class="btn-secondary">
+              Installation Guide
+            </a>
+          </div>
+
+          <!-- Product Preview Card -->
+          <div class="hero-preview glass-card" aria-label="Hush Extension Interface Demo">
+            <div class="preview-bar">
+              <div class="logo-text">
+                <img src="icon-32.png" width="22" height="22" alt="" class="logo-orb" />
+                <span class="logo-name" style="font-size: 16px;">Hush</span>
+                <span class="logo-tag">AUDIO</span>
+              </div>
+              <span style="font-size: 11px; color: var(--accent-mint); font-weight: 600; display: flex; align-items: center; gap: 5px;">
+                <span class="pulse-dot"></span> Active Session
+              </span>
+            </div>
+
+            <div class="preview-row">
+              <span style="font-size: 13px; font-weight: 600;">Spotify — Web Player</span>
+              <span class="preview-vol">85%</span>
+            </div>
+            <div class="preview-row">
+              <span style="font-size: 13px; font-weight: 500; color: var(--text-secondary);">(92) YouTube — Lo-Fi Beats</span>
+              <span class="preview-vol">56%</span>
+            </div>
+            <div class="preview-row" style="opacity: 0.7;">
+              <span style="font-size: 13px; font-weight: 500; color: var(--text-muted);">Google Meet — Weekly Sync</span>
+              <span class="preview-vol" style="color: var(--text-muted);">100%</span>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Features Section -->
+      <section id="features" class="section-wrap">
+        <div class="container">
+          <div class="section-head">
+            <p class="section-tag">Precision Audio Control</p>
+            <h2 class="section-title">Everything You Need to Manage Tab Sound</h2>
+            <p class="section-desc">
+              From independent volume sliders to native Chrome Tab Group integration, Hush delivers studio-grade acoustics inside your browser.
+            </p>
+          </div>
+
+          <div class="features-grid">
+            <article class="feature-card glass-card">
+              <div class="feature-icon-wrap">🎚️</div>
+              <h3 class="feature-title">Individual Tab Volume Control</h3>
+              <p class="feature-text">
+                Adjust any browser tab's volume independently from 0% to 100%. Use precision mouse scrubbing, keyboard shortcuts, or mouse-wheel scrolling without affecting system-wide sound.
+              </p>
+            </article>
+
+            <article class="feature-card glass-card">
+              <div class="feature-icon-wrap">🔊</div>
+              <h3 class="feature-title">Dual Audio Interception</h3>
+              <p class="feature-text">
+                Controls HTML5 <code>&lt;audio&gt;</code> and <code>&lt;video&gt;</code> tags and intercepts Web Audio API <code>AudioContext</code> pipelines with an exponential <code>GainNode</code> multiplier to prevent clipping or popping.
+              </p>
+            </article>
+
+            <article class="feature-card glass-card">
+              <div class="feature-icon-wrap">📂</div>
+              <h3 class="feature-title">Automatic Activity Categorization</h3>
+              <p class="feature-text">
+                Tabs are classified into 8 activity domains: Entertainment, Music, Work, Study, Gaming, Communication, Social, and Other. Master sliders let you mute entire groups at once.
+              </p>
+            </article>
+
+            <article class="feature-card glass-card">
+              <div class="feature-icon-wrap">🎯</div>
+              <h3 class="feature-title">One-Click Focus Modes</h3>
+              <p class="feature-text">
+                Apply pre-configured acoustic presets (Study, Gaming, Meeting) in a single click. Hover over any mode to preview which tabs will be prioritized or muted before applying.
+              </p>
+            </article>
+
+            <article class="feature-card glass-card">
+              <div class="feature-icon-wrap">📑</div>
+              <h3 class="feature-title">Native Chrome Tab Groups</h3>
+              <p class="feature-text">
+                Synchronize your browser with Chrome's native <code>chrome.tabGroups</code> API. Turn 50 unorganized tabs into clean, color-coded native tab groups with one click.
+              </p>
+            </article>
+
+            <article class="feature-card glass-card">
+              <div class="feature-icon-wrap">🚀</div>
+              <h3 class="feature-title">Powered by react-fastload</h3>
+              <p class="feature-text">
+                Built with <a href="https://github.com/abhishek-kumar-pundir/react-fastload" target="_blank" rel="noopener noreferrer" class="btn-link">react-fastload</a> for tiered scheduling and resource deduplication, guaranteeing zero UI freeze even with 100+ open tabs.
+              </p>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <!-- Architecture Section -->
+      <section id="architecture" class="section-wrap">
+        <div class="container">
+          <div class="section-head">
+            <p class="section-tag">Audio Architecture</p>
+            <h2 class="section-title">How Hush Controls Browser Sound</h2>
+            <p class="section-desc">
+              A multi-tier Manifest V3 pipeline that intercepts both standard media tags and advanced Web Audio API audio graphs without latency.
+            </p>
+          </div>
+
+          <div class="arch-card glass-card">
+            <div class="arch-flow">
+              <div class="flow-step">
+                <div class="flow-step-num">Step 1</div>
+                <h3 class="flow-step-title">React 19 Popup</h3>
+                <p class="flow-step-text">Renders precision sliders and HUD scheduled through react-fastload with cached favicons.</p>
+              </div>
+              <div class="flow-step">
+                <div class="flow-step-num">Step 2</div>
+                <h3 class="flow-step-title">Service Worker</h3>
+                <p class="flow-step-text">Coordinates per-tab state, cleans up closed tabs, and persists volume levels via <code>chrome.storage.local</code>.</p>
+              </div>
+              <div class="flow-step">
+                <div class="flow-step-num">Step 3</div>
+                <h3 class="flow-step-title">Isolated Content Script</h3>
+                <p class="flow-step-text">Hooks HTML5 media elements (<code>play</code>, <code>loadstart</code>) and handles direct volume synchronization.</p>
+              </div>
+              <div class="flow-step">
+                <div class="flow-step-num">Step 4</div>
+                <h3 class="flow-step-title">Main-World Gain Hook</h3>
+                <p class="flow-step-text">Inserts master <code>GainNode</code> before <code>destination</code> with smoothed <code>setTargetAtTime</code> transitions.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Shortcuts Section -->
+      <section id="shortcuts" class="section-wrap">
+        <div class="container">
+          <div class="section-head">
+            <p class="section-tag">Productivity Controls</p>
+            <h2 class="section-title">Keyboard & Mouse Controls</h2>
+            <p class="section-desc">
+              Control tab volume without taking your hands off the keyboard or leaving your current workspace.
+            </p>
+          </div>
+
+          <div class="table-card glass-card">
+            <table class="shortcut-table">
+              <thead>
+                <tr>
+                  <th scope="col">Action</th>
+                  <th scope="col">Windows & Linux</th>
+                  <th scope="col">macOS</th>
+                  <th scope="col">Description</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td><strong>Quick Mute Active Tab</strong></td>
+                  <td><kbd>Alt</kbd> + <kbd>M</kbd></td>
+                  <td><kbd>Cmd</kbd> + <kbd>Shift</kbd> + <kbd>M</kbd></td>
+                  <td>Toggle mute on the active browser tab immediately without opening the popup.</td>
+                </tr>
+                <tr>
+                  <td><strong>Fine Volume Step</strong></td>
+                  <td><kbd>←</kbd> / <kbd>→</kbd></td>
+                  <td><kbd>←</kbd> / <kbd>→</kbd></td>
+                  <td>Adjust focused volume slider by ±1% increments.</td>
+                </tr>
+                <tr>
+                  <td><strong>Large Volume Step</strong></td>
+                  <td><kbd>Shift</kbd> + <kbd>Arrow</kbd></td>
+                  <td><kbd>Shift</kbd> + <kbd>Arrow</kbd></td>
+                  <td>Adjust focused volume slider by ±10% increments.</td>
+                </tr>
+                <tr>
+                  <td><strong>Mouse Wheel Scrubbing</strong></td>
+                  <td><kbd>Wheel Up/Down</kbd></td>
+                  <td><kbd>Wheel Up/Down</kbd></td>
+                  <td>Hover over any slider and scroll to adjust volume by ±5%.</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </section>
+
+      <!-- Installation Guide -->
+      <section id="installation" class="section-wrap">
+        <div class="container">
+          <div class="section-head">
+            <p class="section-tag">Get Started</p>
+            <h2 class="section-title">How to Install Hush</h2>
+            <p class="section-desc">
+              Hush is currently available as an open-source unpacked extension while Chrome Web Store review is prepared.
+            </p>
+          </div>
+
+          <div class="glass-card" style="padding: 32px; max-width: 760px; margin: 0 auto;">
+            <ol style="padding-left: 24px; display: flex; flex-direction: column; gap: 14px; font-size: 15px; color: var(--text-secondary);">
+              <li>
+                <strong>Clone the GitHub repository:</strong><br />
+                <code style="background: rgba(38,44,62,0.8); padding: 4px 8px; border-radius: 4px; color: var(--accent-periwinkle); display: inline-block; margin-top: 4px;">git clone https://github.com/abhishek-kumar-pundir/Hush.git</code>
+              </li>
+              <li>
+                <strong>Install dependencies and build the extension:</strong><br />
+                <code style="background: rgba(38,44,62,0.8); padding: 4px 8px; border-radius: 4px; color: var(--accent-periwinkle); display: inline-block; margin-top: 4px;">npm install &amp;&amp; npm run build</code>
+              </li>
+              <li>
+                Open Chromium (Chrome, Brave, Edge) and navigate to <strong><code>chrome://extensions</code></strong>.
+              </li>
+              <li>
+                Enable <strong>Developer mode</strong> in the top-right corner.
+              </li>
+              <li>
+                Click <strong>Load unpacked</strong> and select the <strong><code>dist</code></strong> directory generated by the build.
+              </li>
+              <li>
+                Pin <strong>Hush</strong> to your browser toolbar for quick volume access!
+              </li>
+            </ol>
+          </div>
+        </div>
+      </section>
+
+      <!-- FAQ Section -->
+      <section id="faq" class="section-wrap">
+        <div class="container">
+          <div class="section-head">
+            <p class="section-tag">Frequently Asked Questions</p>
+            <h2 class="section-title">Technical FAQ</h2>
+            <p class="section-desc">
+              Everything you need to know about Hush's permissions, performance, and privacy.
+            </p>
+          </div>
+
+          <div class="faq-grid">
+            <div class="faq-card glass-card">
+              <h3>Does Hush collect or send my browsing data?</h3>
+              <p>
+                No. Hush operates entirely client-side. There are no remote servers, analytics, or trackers. All volume settings and category overrides are stored locally via <code>chrome.storage.local</code>.
+              </p>
+            </div>
+
+            <div class="faq-card glass-card">
+              <h3>Can Hush adjust sound on sites using Web Audio API?</h3>
+              <p>
+                Yes. Hush uses a dual-engine architecture: it controls HTML5 media elements and injects a master <code>GainNode</code> hook directly into page audio contexts before <code>destination</code>.
+              </p>
+            </div>
+
+            <div class="faq-card glass-card">
+              <h3>Why does Hush request the <code>tabs</code> permission?</h3>
+              <p>
+                The <code>tabs</code> permission is required to list open tab titles, favicons, and audible status in the popup, and to focus a specific tab when you click on it in the Now Playing HUD.
+              </p>
+            </div>
+
+            <div class="faq-card glass-card">
+              <h3>Is Hush compatible with all Chromium browsers?</h3>
+              <p>
+                Yes. Hush is built to the Manifest V3 standard and works across Google Chrome, Brave, Microsoft Edge, Arc, and other Chromium-based browsers.
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="site-footer">
+      <div class="footer-container">
+        <p>© 2026 Abhishek Kumar Pundir. Released under the MIT License.</p>
+        <div class="footer-links">
+          <a href="#features">Features</a>
+          <a href="#shortcuts">Shortcuts</a>
+          <a href="privacy.html">Privacy Policy</a>
+          <a
+            href="https://github.com/abhishek-kumar-pundir/Hush"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            GitHub Repository
+          </a>
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>
