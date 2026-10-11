@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 32 32" fill="none">
+  <!-- TabSound Stillness: Calm sanctuary frame enclosing controlled sound -->
+  <rect width="32" height="32" rx="8" fill="#1D211E" stroke="#303731" stroke-width="1.5" />
+  <rect x="7.5" y="11" width="2.5" height="10" rx="1.25" fill="#B6B8D0" />
+  <rect x="12" y="6.5" width="2.5" height="19" rx="1.25" fill="#B6B8D0" />
+  <rect x="16.5" y="9" width="2.5" height="14" rx="1.25" fill="#B6B8D0" />
+  <rect x="21" y="12" width="2.5" height="8" rx="1.25" fill="#B6B8D0" />
+</svg>

@@ -1,0 +1,48 @@
+{
+  "manifest_version": 3,
+  "name": "TabSound",
+  "version": "1.0.0",
+  "description": "Control, organize, and automate the sound of every tab.",
+  "action": {
+    "default_popup": "index.html",
+    "default_icon": "favicon.svg"
+  },
+  "icons": {
+    "16": "favicon.svg",
+    "32": "favicon.svg",
+    "48": "favicon.svg",
+    "128": "favicon.svg"
+  },
+  "background": {
+    "service_worker": "src/background.ts",
+    "type": "module"
+  },
+  "content_scripts": [
+    {
+      "matches": ["<all_urls>"],
+      "js": ["src/main-world.ts"],
+      "world": "MAIN",
+      "run_at": "document_start"
+    },
+    {
+      "matches": ["<all_urls>"],
+      "js": ["src/content.ts"],
+      "all_frames": true,
+      "run_at": "document_start"
+    }
+  ],
+  "permissions": [
+    "tabs",
+    "storage",
+    "tabGroups"
+  ],
+  "commands": {
+    "toggle-mute": {
+      "suggested_key": {
+        "default": "Alt+M",
+        "mac": "Command+Shift+M"
+      },
+      "description": "Toggle mute for the current tab"
+    }
+  }
+}

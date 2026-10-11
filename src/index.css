@@ -1,0 +1,96 @@
+:root {
+  /* ==========================================================================
+     TabSound: Stillness Design Tokens
+     Authoritative palette: Graphite, Muted Periwinkle, Cool Mint, Soft Ivory
+     ========================================================================== */
+  --ts-bg: #121412;
+  --ts-surface: #1D211E;
+  --ts-surface-raised: #262B27;
+  --ts-border: #303731;
+  --ts-text: #E8E9E6;
+  --ts-text-secondary: #A8ADA6;
+  --ts-text-muted: #7F867D;
+  --ts-accent: #B6B8D0;
+  --ts-accent-hover: #C7C9DD;
+  --ts-accent-text: #20212A;
+  --ts-playing: #83BFA9;
+  --ts-playing-bg: #202E27;
+  --ts-danger: #D58E96;
+  --ts-focus: #C5C7DD;
+
+  /* Typography: Inter sole interface typeface */
+  --ts-font: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+
+  /* Spacing Scale (4px increments) */
+  --ts-space-1: 4px;
+  --ts-space-2: 8px;
+  --ts-space-3: 12px;
+  --ts-space-4: 16px;
+  --ts-space-5: 20px;
+
+  /* Corner Radii */
+  --ts-radius-sm: 6px;
+  --ts-radius-md: 8px;
+  --ts-radius-lg: 10px;
+  --ts-radius-full: 9999px;
+
+  /* Shadows */
+  --ts-shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.35);
+  --ts-shadow-md: 0 4px 14px rgba(0, 0, 0, 0.45);
+  --ts-shadow-lg: 0 8px 24px rgba(0, 0, 0, 0.55);
+
+  /* Transitions */
+  --ts-transition-fast: 0.15s ease;
+  --ts-transition-normal: 0.2s ease;
+}
+
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html, body {
+  width: 380px;
+  height: 580px;
+  margin: 0;
+  padding: 0;
+  background-color: var(--ts-bg);
+  color: var(--ts-text);
+  font-family: var(--ts-font);
+  font-size: 13px;
+  line-height: 1.4;
+  overflow: hidden;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  user-select: none;
+  -webkit-user-select: none;
+}
+
+#root {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  background-color: var(--ts-bg);
+}
+
+button, input {
+  font-family: inherit;
+  color: inherit;
+}
+
+:focus-visible {
+  outline: 2px solid var(--ts-focus);
+  outline-offset: 2px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
