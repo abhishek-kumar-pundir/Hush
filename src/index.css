@@ -96,9 +96,13 @@ html, body {
   background: transparent;
 }
 
-button, input {
+button, input, select, textarea {
   font-family: inherit;
   color: inherit;
+}
+
+input, select, textarea {
+  color-scheme: dark;
 }
 
 :focus-visible {

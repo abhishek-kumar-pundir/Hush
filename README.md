@@ -131,7 +131,52 @@ Quick toggle presets designed for common workflows:
 
 Hovering over any Focus Mode button displays a live popover listing open tabs that will be active or muted in that preset.
 
-### 6. Smart Organize
+### 6. Intelligent Audio Priority (Local Sound Intelligence)
+
+Hush includes a local-first browser audio coordination engine that automatically manages competing audio sources without cloud services or external AI APIs:
+
+```mermaid
+flowchart TD
+    Signals["Media Signals<br/>(audible, playing, tab activation)"] --> Detector["Conflict Detector & Debouncer<br/>(250ms anti-oscillation)"]
+    Detector --> Engine["Priority Rules Engine<br/>(Explicit user rules > Scene > Context)"]
+    Engine --> Planner["Pure Action Planner<br/>(Duck, Pause, or Notify)"]
+    Planner --> Journal["Action Ownership Journal<br/>(Tracks managed changes & overrides)"]
+    Journal --> Adapter["Audio Control Adapter<br/>(HTML5 / Web Audio / Safe Mute Fallback)"]
+    Adapter --> Restore["Safe Restoration<br/>(When conflict ends & unchanged by user)"]
+```
+
+#### Strict Rule Precedence:
+1. **Global Automation Disabled**: Respects user's master toggle.
+2. **Explicit Manual Overrides & Exclusions**: A manually adjusted or pinned tab is never automatically interfered with. Excluded domains are immune to automatic ducking.
+3. **Explicit Domain Priorities**: User-configured priorities (0–100) take precedence over scene defaults.
+4. **Active Scene Rules**: Domain and category priorities defined by the currently active scene.
+5. **Contextual Signals**: Foreground active tab bonus (+5) and natural activity weighting.
+6. **Deterministic Tie-Breaking**: Earliest audible timestamp, followed by tab ID fallback.
+
+#### Audio Scenes:
+- **Deep Work**: Prioritizes communication (Zoom, Google Meet, Slack) and suppresses background music, videos, and social audio.
+- **Study**: Prioritizes lectures and educational media (Coursera, Udemy, Khan Academy) while ducking ambient music.
+- **Entertainment**: Gives focus to active video and media streams.
+- **Custom**: Fully user-tailored domain priorities and ducking behavior.
+
+#### Safe Action Ownership & Restoration:
+- **Action Journal**: Every automated ducking action records the tab's navigation identity, pre-conflict baseline volume, and extension ownership.
+- **User Change Immunity**: If you manually move a slider on a ducked tab, Hush relinquishes ownership and will **never** overwrite your chosen volume when the conflict finishes.
+- **Navigation Safety**: If a ducked tab navigates to a new URL, the old action is invalidated to avoid restoring unrelated content.
+- **Pre-Mute Respect**: Tabs muted before Hush intervened are never unmuted automatically.
+
+#### Control Adapters & Technical Limitations:
+- **HTML5 Media**: Smooth volume adjustment down to target ducking level (default 25%).
+- **Web Audio**: Injected `GainNode` support.
+- **Safe Fallback**: On restricted or cross-origin frames where programmatic volume adjustment is blocked by browser security, Hush utilizes native tab muting as a truthful fallback rather than claiming volume reduction.
+- **Restricted Domains**: Extensions cannot inject into `chrome://` or Chrome Web Store pages.
+
+#### Local Contextual Learning:
+- Identifies repeated patterns (e.g., lowering a specific domain 3 times during Study mode).
+- Proposes concise, dismissible suggestions ("Make this your default rule?").
+- Operates 100% locally with zero analytics, zero telemetry, and a one-click "Clear Learned Rules" action.
+
+### 7. Smart Organize
 Click the **Organize tabs** button in the header to preview and group your loose browser tabs into native, color-coded Chrome Tab Groups using the `chrome.tabGroups` API.
 
 ---

@@ -17,9 +17,15 @@ import {
   AlertCircle,
   GripVertical,
   ArrowUp,
-  ArrowDown
+  ArrowDown,
+  RotateCcw,
+  ChevronDown,
+  ChevronRight
 } from 'lucide-react'
 import { SmartImage } from 'react-fastload'
+import { SoundIntelligenceCard } from './components/SoundIntelligenceCard'
+import { AudioIntelligenceSettings } from './components/AudioIntelligenceSettings'
+import { OrganizeTabsWorkspace } from './components/OrganizeTabsWorkspace'
 import './App.css'
 
 function HushIcon({ size = 28, className = '' }: { size?: number; className?: string }) {
@@ -54,8 +60,19 @@ const CATEGORY_ICONS: Record<Category, React.ElementType> = {
   [CATEGORIES.MUSIC]: Sliders,
   [CATEGORIES.SOCIAL]: Globe,
   [CATEGORIES.GAMING]: Gamepad2,
-  [CATEGORIES.UNKNOWN]: HelpCircle,
+  [CATEGORIES.OTHER]: HelpCircle,
 }
+
+const ORDERED_CATEGORIES: Category[] = [
+  CATEGORIES.ENTERTAINMENT,
+  CATEGORIES.STUDY,
+  CATEGORIES.WORK,
+  CATEGORIES.COMMUNICATION,
+  CATEGORIES.MUSIC,
+  CATEGORIES.SOCIAL,
+  CATEGORIES.GAMING,
+  CATEGORIES.OTHER,
+];
 
 const FOCUS_MODES = [
   {
@@ -70,7 +87,7 @@ const FOCUS_MODES = [
       [CATEGORIES.ENTERTAINMENT]: 0.0,
       [CATEGORIES.GAMING]: 0.0,
       [CATEGORIES.COMMUNICATION]: 0.5,
-      [CATEGORIES.UNKNOWN]: 0.2
+      [CATEGORIES.OTHER]: 0.2
     },
     mutedCategories: [CATEGORIES.SOCIAL, CATEGORIES.ENTERTAINMENT, CATEGORIES.GAMING]
   },
@@ -86,7 +103,7 @@ const FOCUS_MODES = [
       [CATEGORIES.SOCIAL]: 0.0,
       [CATEGORIES.STUDY]: 0.0,
       [CATEGORIES.WORK]: 0.0,
-      [CATEGORIES.UNKNOWN]: 0.0
+      [CATEGORIES.OTHER]: 0.0
     },
     mutedCategories: [CATEGORIES.ENTERTAINMENT, CATEGORIES.SOCIAL, CATEGORIES.STUDY, CATEGORIES.WORK]
   },
@@ -102,7 +119,7 @@ const FOCUS_MODES = [
       [CATEGORIES.SOCIAL]: 0.0,
       [CATEGORIES.STUDY]: 0.0,
       [CATEGORIES.WORK]: 0.0,
-      [CATEGORIES.UNKNOWN]: 0.0
+      [CATEGORIES.OTHER]: 0.0
     },
     mutedCategories: [
       CATEGORIES.GAMING,
@@ -111,7 +128,7 @@ const FOCUS_MODES = [
       CATEGORIES.SOCIAL,
       CATEGORIES.STUDY,
       CATEGORIES.WORK,
-      CATEGORIES.UNKNOWN
+      CATEGORIES.OTHER
     ]
   }
 ];
@@ -126,7 +143,16 @@ function App() {
   const [errorMsg, setErrorMsg] = useState<string | null>(null)
   const [toastMsg, setToastMsg] = useState<string | null>(null)
   
-  const [isOrganizing, setIsOrganizing] = useState(false)
+  const [activeView, setActiveView] = useState<'dashboard' | 'settings' | 'organize'>('dashboard')
+  const [collapsedGroups, setCollapsedGroups] = useState<Record<string, boolean>>({})
+
+  const toggleGroupCollapse = (cat: string) => {
+    setCollapsedGroups(prev => ({
+      ...prev,
+      [cat]: !prev[cat]
+    }))
+  }
+
   const [activeFocus, setActiveFocus] = useState<string | null>(null)
   const [hoveredFocusMode, setHoveredFocusMode] = useState<string | null>(null)
   
@@ -256,7 +282,7 @@ function App() {
             [CATEGORIES.STUDY]: 1.0,
             [CATEGORIES.SOCIAL]: 1.0,
             [CATEGORIES.GAMING]: 1.0,
-            [CATEGORIES.UNKNOWN]: 1.0,
+            [CATEGORIES.OTHER]: 1.0,
           },
           categoryOverrides: {}
         });
@@ -290,19 +316,29 @@ function App() {
     chrome.tabs?.onUpdated?.addListener(listener)
     chrome.tabs?.onRemoved?.addListener(listener)
     chrome.tabs?.onActivated?.addListener(listener)
+    chrome.tabs?.onCreated?.addListener(listener)
+    chrome.tabs?.onMoved?.addListener(listener)
+    chrome.tabs?.onAttached?.addListener(listener)
+    chrome.tabs?.onDetached?.addListener(listener)
 
     chrome.tabGroups?.onUpdated?.addListener(listener)
     chrome.tabGroups?.onCreated?.addListener(listener)
     chrome.tabGroups?.onRemoved?.addListener(listener)
+    chrome.tabGroups?.onMoved?.addListener(listener)
     
     return () => {
       chrome.tabs?.onUpdated?.removeListener(listener)
       chrome.tabs?.onRemoved?.removeListener(listener)
       chrome.tabs?.onActivated?.removeListener(listener)
+      chrome.tabs?.onCreated?.removeListener(listener)
+      chrome.tabs?.onMoved?.removeListener(listener)
+      chrome.tabs?.onAttached?.removeListener(listener)
+      chrome.tabs?.onDetached?.removeListener(listener)
 
       chrome.tabGroups?.onUpdated?.removeListener(listener)
       chrome.tabGroups?.onCreated?.removeListener(listener)
       chrome.tabGroups?.onRemoved?.removeListener(listener)
+      chrome.tabGroups?.onMoved?.removeListener(listener)
     }
   }, [followCurrentTab])
 
@@ -395,12 +431,15 @@ function App() {
 
   const handleApplyOrganization = () => {
     if (typeof chrome !== 'undefined' && chrome.runtime?.sendMessage) {
-      chrome.runtime.sendMessage({ type: 'ORGANIZE_TABS' }, () => setIsOrganizing(false))
+      chrome.runtime.sendMessage({ type: 'ORGANIZE_TABS' }, () => {
+        setActiveView('dashboard');
+        showToast('Tabs organized into groups');
+      });
     } else {
-      setIsOrganizing(false)
-      showToast('Tabs organized into groups')
+      setActiveView('dashboard');
+      showToast('Tabs organized into groups');
     }
-  }
+  };
 
   const handleApplyFocusMode = (mode: typeof FOCUS_MODES[0]) => {
     setActiveFocus(mode.id)
@@ -463,17 +502,76 @@ function App() {
       return;
     }
     
-    const targetLabel = category === CATEGORIES.UNKNOWN ? 'OTHER' : category.toUpperCase();
+    const targetLabel = category === CATEGORIES.OTHER ? 'OTHER' : category.toUpperCase();
     showToast(`Moved to ${targetLabel}`);
 
     try {
       const hostname = new URL(droppedTab.url).hostname.replace('www.', '');
       setState(s => ({ ...s, categoryOverrides: { ...s.categoryOverrides, [hostname]: category } }))
-      chrome.runtime?.sendMessage?.({ type: 'OVERRIDE_TAB_CATEGORY', url: droppedTab.url, category })
+      chrome.runtime?.sendMessage?.({
+        type: 'OVERRIDE_TAB_CATEGORY',
+        url: droppedTab.url,
+        category,
+        tabId: droppedTab.id
+      })
     } catch {}
     
     setDraggedTab(null);
   }
+
+  const handleResetToOther = () => {
+    if (typeof chrome !== 'undefined' && chrome.runtime?.sendMessage) {
+      chrome.runtime.sendMessage({ type: 'RESET_ALL_TABS' }, (res) => {
+        if (res?.success) {
+          showToast('All tabs moved to Other');
+          const newOverrides: Record<string, Category> = {};
+          tabs.forEach(tab => {
+            if (tab.url) {
+              try {
+                const hostname = new URL(tab.url).hostname.replace('www.', '');
+                if (hostname) newOverrides[hostname] = CATEGORIES.OTHER;
+              } catch {}
+            }
+          });
+          setState(s => ({
+            ...s,
+            categoryOverrides: newOverrides,
+            groupVolumes: {
+              ...s.groupVolumes,
+              [CATEGORIES.ENTERTAINMENT]: 1.0,
+              [CATEGORIES.STUDY]: 1.0,
+              [CATEGORIES.WORK]: 1.0,
+              [CATEGORIES.COMMUNICATION]: 1.0,
+              [CATEGORIES.OTHER]: 1.0,
+              [CATEGORIES.MUSIC]: 1.0,
+              [CATEGORIES.SOCIAL]: 1.0,
+              [CATEGORIES.GAMING]: 1.0,
+            }
+          }));
+          chrome.tabs?.query?.({ currentWindow: true }, setTabs);
+          if (chrome.tabGroups?.query) {
+            chrome.tabGroups.query({ windowId: chrome.windows.WINDOW_ID_CURRENT }, (groups) => {
+              if (groups) setChromeGroups(groups);
+            });
+          }
+        }
+      });
+    } else {
+      showToast('All tabs moved to Other');
+      const newOverrides: Record<string, Category> = {};
+      tabs.forEach(tab => {
+        if (tab.url) {
+          try {
+            const hostname = new URL(tab.url).hostname.replace('www.', '');
+            if (hostname) newOverrides[hostname] = CATEGORIES.OTHER;
+          } catch {}
+        }
+      });
+      setChromeGroups([]);
+      setTabs(prev => prev.map(t => ({ ...t, groupId: -1 })));
+      setState(s => ({ ...s, categoryOverrides: newOverrides }));
+    }
+  };
 
   const groups: Partial<Record<Category, chrome.tabs.Tab[]>> = {}
   tabs.forEach(tab => {
@@ -483,67 +581,35 @@ function App() {
     groups[cat]!.push(tab)
   })
   
-  const orderedCategories = Object.values(CATEGORIES);
+  const orderedCategories = ORDERED_CATEGORIES;
   const unpinnedTabsCount = tabs.filter(t => !t.pinned).length;
 
-  if (isOrganizing) {
+  if (activeView === 'organize') {
     return (
       <div className="app-wrapper">
-        <div className="organize-preview">
-          <div className="organize-header">
-            <div className="organize-icon-wrap">
-              <Sparkles size={16} />
-            </div>
-            <div className="organize-header-text">
-              <h2>Organize tabs</h2>
-              <p className="subtitle">
-                Group {unpinnedTabsCount} open {unpinnedTabsCount === 1 ? 'tab' : 'tabs'} into color-coded Chrome tab groups by activity.
-              </p>
-            </div>
-          </div>
-
-          <div className="preview-list">
-            {Object.entries(groups).map(([catStr, catTabs]) => {
-              if (catTabs.length === 0) return null;
-              const catName = catStr === CATEGORIES.UNKNOWN ? 'OTHER' : catStr;
-              return (
-                <div key={catStr} className="preview-category">
-                  <div className="preview-category-title">
-                    <span>{catName}</span>
-                    <span className="badge">{catTabs.length}</span>
-                  </div>
-                  <div className="preview-category-tabs">
-                    {catTabs.map(t => (
-                      <div key={t.id} className="preview-tab-row">
-                        {t.favIconUrl ? (
-                          <SmartImage
-                            src={t.favIconUrl}
-                            className="preview-favicon"
-                            alt=""
-                            priority="LOW"
-                            strategy="auto"
-                            style={{ width: 14, height: 14, borderRadius: 3, flexShrink: 0 }}
-                            onError={(e) => { (e.currentTarget as HTMLElement).style.display = 'none' }}
-                          />
-                        ) : (
-                          <div className="preview-favicon-fallback" />
-                        )}
-                        <span className="preview-tab-title" title={t.title}>{t.title}</span>
-                      </div>
-                    ))}
-                  </div>
-                </div>
-              )
-            })}
-          </div>
-
-          <div className="button-group">
-            <button className="btn-secondary" onClick={() => setIsOrganizing(false)}>Cancel</button>
-            <button className="btn-primary" onClick={handleApplyOrganization}>Apply</button>
-          </div>
-        </div>
+        <OrganizeTabsWorkspace
+          tabs={tabs}
+          resolveCategory={resolveTabCategory}
+          onApply={handleApplyOrganization}
+          onClose={() => setActiveView('dashboard')}
+          onDropToCategory={handleDropToCategory}
+          onDragStart={handleDragStart}
+          onDragEnd={handleDragEnd}
+          draggedTab={draggedTab}
+        />
       </div>
-    )
+    );
+  }
+
+  if (activeView === 'settings') {
+    return (
+      <div className="app-wrapper">
+        <AudioIntelligenceSettings
+          onBack={() => setActiveView('dashboard')}
+          onToast={showToast}
+        />
+      </div>
+    );
   }
 
   return (
@@ -575,11 +641,11 @@ function App() {
           </div>
           <button
             className="btn-organize"
-            onClick={() => setIsOrganizing(true)}
+            onClick={() => setActiveView('organize')}
             title="Organize tabs into Chrome tab groups"
             aria-label="Organize tabs into groups"
           >
-            <Sparkles size={13} />
+            <Sparkles size={12} />
             <span>Organize tabs</span>
           </button>
         </header>
@@ -754,11 +820,28 @@ function App() {
           )}
         </div>
 
-        {/* 3. CATEGORIES & TAB GROUPS */}
+        {/* 3. SOUND INTELLIGENCE (COMPACT HUD) */}
+        <SoundIntelligenceCard
+          onOpenSettings={() => setActiveView('settings')}
+          onToast={showToast}
+        />
+
+        {/* 4. CATEGORIES & TAB GROUPS */}
         <div className="section categories-section">
-          <div className="section-label">
-            <span>Tab Groups</span>
-            <span className="badge">{unpinnedTabsCount}</span>
+          <div className="section-header-row">
+            <div className="section-label">
+              <span>Tab Groups</span>
+              <span className="badge">{unpinnedTabsCount}</span>
+            </div>
+            <button
+              className="btn-reset-groups"
+              onClick={handleResetToOther}
+              title="Reset all tabs to Other and ungroup from Chrome tab groups"
+              aria-label="Reset all tabs to Other"
+            >
+              <RotateCcw size={11} />
+              <span>Reset</span>
+            </button>
           </div>
           {orderedCategories.map(category => {
             const categoryTabs = groups[category] || [];
@@ -769,13 +852,14 @@ function App() {
             }
 
             const CatIcon = CATEGORY_ICONS[category] || HelpCircle;
-            const isUnknown = category === CATEGORIES.UNKNOWN;
-            const displayName = isUnknown ? 'OTHER' : category;
+            const isOther = category === CATEGORIES.OTHER;
+            const displayName = isOther ? 'OTHER' : category;
+            const isCollapsed = Boolean(collapsedGroups[category]);
 
             return (
               <div 
                 key={category} 
-                className={`compact-category-card ${isUnknown ? 'category-unknown' : ''}`}
+                className={`compact-category-card ${isOther ? 'category-unknown category-other' : ''} ${isCollapsed ? 'is-collapsed' : ''}`}
                 onDragOver={(e) => { e.preventDefault(); e.currentTarget.classList.add('drag-over') }}
                 onDragLeave={(e) => {
                   const rect = e.currentTarget.getBoundingClientRect();
@@ -787,20 +871,35 @@ function App() {
               >
                 <div 
                   className="cc-header"
-                  title={`${categoryTabs.length} tabs currently open in ${displayName}`}
+                  title={`${categoryTabs.length} tabs in ${displayName}. Click to collapse/expand.`}
+                  onClick={() => toggleGroupCollapse(category)}
+                  role="button"
+                  tabIndex={0}
+                  onKeyDown={(e) => e.key === 'Enter' && toggleGroupCollapse(category)}
                 >
                   <div className="cc-title-group">
+                    {isCollapsed ? (
+                      <ChevronRight size={12} className="cc-collapse-icon" />
+                    ) : (
+                      <ChevronDown size={12} className="cc-collapse-icon" />
+                    )}
                     <CatIcon size={13} className="cc-icon" />
                     <strong className="cc-name">{displayName}</strong>
                     <span className="cc-count">({categoryTabs.length})</span>
                   </div>
-                  <div className="cc-master-vol">
+                  <div 
+                    className="cc-master-vol"
+                    onClick={(e) => e.stopPropagation()}
+                    onMouseDown={(e) => e.stopPropagation()}
+                    onPointerDown={(e) => e.stopPropagation()}
+                  >
                     <input 
                       type="range" 
                       min="0" max="1" step="0.01" 
                       value={gVol}
                       onChange={(e) => handleGroupVolume(category, parseFloat(e.target.value))}
                       onMouseDown={(e) => e.stopPropagation()}
+                      onPointerDown={(e) => e.stopPropagation()}
                       className="slider group-slider"
                       aria-label={`Master volume for ${displayName} group`}
                     />
@@ -808,7 +907,8 @@ function App() {
                   </div>
                 </div>
                 
-                <div className="cc-body">
+                {!isCollapsed && (
+                  <div className="cc-body">
                   {categoryTabs.length > 0 ? (
                     <div className="cc-list">
                       {categoryTabs.map((tab) => {
@@ -895,6 +995,7 @@ function App() {
                     </div>
                   )}
                 </div>
+                )}
               </div>
             )
           })}

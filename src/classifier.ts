@@ -6,7 +6,8 @@ export const CATEGORIES = {
   MUSIC: 'Music',
   SOCIAL: 'Social',
   GAMING: 'Gaming',
-  UNKNOWN: 'Unknown'
+  OTHER: 'Other',
+  UNKNOWN: 'Other'
 } as const;
 
 export type Category = typeof CATEGORIES[keyof typeof CATEGORIES];
@@ -45,12 +46,15 @@ const DOMAIN_RULES: Record<string, Category> = {
 };
 
 export function classifyUrl(urlStr: string | undefined, overrides?: Record<string, Category>): Category {
-  if (!urlStr) return CATEGORIES.UNKNOWN;
+  if (!urlStr) return CATEGORIES.OTHER;
   try {
     const url = new URL(urlStr);
     const domain = url.hostname.replace('www.', '');
     
-    if (overrides && overrides[domain]) return overrides[domain];
+    if (overrides && overrides[domain]) {
+      const ov = overrides[domain];
+      return ((ov as string) === 'Unknown' || (ov as string) === 'OTHER') ? CATEGORIES.OTHER : ov;
+    }
     
     if (DOMAIN_RULES[domain]) return DOMAIN_RULES[domain];
     
@@ -60,8 +64,8 @@ export function classifyUrl(urlStr: string | undefined, overrides?: Record<strin
       }
     }
     
-    return CATEGORIES.UNKNOWN;
+    return CATEGORIES.OTHER;
   } catch {
-    return CATEGORIES.UNKNOWN;
+    return CATEGORIES.OTHER;
   }
 }
