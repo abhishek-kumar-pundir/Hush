@@ -1,217 +1,136 @@
-# Hush — Chrome Tab Volume Control & Audio Manager
+<p align="center">
+  <img src="docs/icon-128.png" width="96" height="96" alt="Hush Icon" />
+</p>
 
-> **A quieter browser. Control volume for individual Chrome tabs, mute noisy background tabs, manage audio across browser windows, and organize tabs into native groups.**
+<h1 align="center">Hush</h1>
 
-[![Manifest V3](https://img.shields.io/badge/Manifest-V3-success?style=flat-square&logo=googlechrome&logoColor=white)](https://developer.chrome.com/docs/extensions/mv3/intro/)
-[![React 19](https://img.shields.io/badge/React-19-61dafb?style=flat-square&logo=react&logoColor=black)](https://react.dev/)
-[![TypeScript](https://img.shields.io/badge/TypeScript-6.0-blue?style=flat-square&logo=typescript&logoColor=white)](https://www.typescriptlang.org/)
-[![Vite](https://img.shields.io/badge/Vite-8.3-646cff?style=flat-square&logo=vite&logoColor=white)](https://vitejs.dev/)
-[![Powered by react-fastload](https://img.shields.io/badge/Powered%20by-react--fastload-ff4081?style=flat-square)](https://github.com/abhishek-kumar-pundir/react-fastload)
-[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg?style=flat-square)](LICENSE)
+<p align="center">
+  <b>Your browser's audio, under control.</b><br/>
+  Per-tab volume control, automatic local audio coordination, and intelligent workspace organization for Chromium browsers.
+</p>
 
-[**🌐 Live Website & Documentation**](https://abhishek-kumar-pundir.github.io/Hush/) • [**🔒 Privacy Policy**](https://abhishek-kumar-pundir.github.io/Hush/privacy.html) • [**📦 Installation Guide**](#-installation--loading-into-chrome)
+<p align="center">
+  <a href="https://developer.chrome.com/docs/extensions/mv3/intro/"><img src="https://img.shields.io/badge/Manifest-V3-success?style=flat-square&logo=googlechrome&logoColor=white" alt="Manifest V3" /></a>
+  <a href="https://react.dev/"><img src="https://img.shields.io/badge/React-19-61dafb?style=flat-square&logo=react&logoColor=black" alt="React 19" /></a>
+  <a href="https://www.typescriptlang.org/"><img src="https://img.shields.io/badge/TypeScript-6.0-blue?style=flat-square&logo=typescript&logoColor=white" alt="TypeScript" /></a>
+  <a href="https://vitejs.dev/"><img src="https://img.shields.io/badge/Vite-8.3-646cff?style=flat-square&logo=vite&logoColor=white" alt="Vite" /></a>
+  <a href="https://github.com/abhishek-kumar-pundir/react-fastload"><img src="https://img.shields.io/badge/Powered%20by-react--fastload-ff4081?style=flat-square" alt="react-fastload" /></a>
+  <a href="LICENSE"><img src="https://img.shields.io/badge/License-MIT-yellow.svg?style=flat-square" alt="License: MIT" /></a>
+  <img src="https://img.shields.io/badge/Chrome_Web_Store-Pending_Review-orange?style=flat-square" alt="Chrome Web Store: Pending Review" />
+</p>
+
+<p align="center">
+  <a href="#-screenshots">Screenshots</a> •
+  <a href="#-feature-overview">Features</a> •
+  <a href="#-how-it-works">Architecture</a> •
+  <a href="#-installation">Installation</a> •
+  <a href="#-usage-guide">Usage Guide</a> •
+  <a href="docs/privacy.html">Privacy Policy</a>
+</p>
 
 ---
 
 ## 📖 Overview
 
-**Hush** is an open-source Chrome extension for individual tab volume control, browser audio management, and intelligent tab organization. Whether you have 5 or 150 tabs open, Hush lets you independently adjust the volume of any specific tab, instantly mute noisy background audio, organize open tabs into native color-coded Chrome Tab Groups, and enforce one-click Focus Modes.
+**Hush** is an open-source Chrome extension engineered to solve browser audio chaos. Whether you have 5 or 50 tabs open, Hush provides independent, per-tab volume adjustment, local intelligent audio ducking across competing sources, native tab muting, and single-click tab organization into native Chrome Tab Groups.
 
-Built with a smoky glass interface matching its translucent glass orb identity, Hush combines visual restraint with studio-grade acoustics. Powered by [**react-fastload**](https://github.com/abhishek-kumar-pundir/react-fastload), Hush schedules favicon decoding and component rendering so the interface remains silky smooth even in tab-heavy workflows.
-
----
-
-## ⚡ Highlights & Verified Features
-
-- **🎚️ Chrome Tab Volume Control**: Adjust the audio level of any specific browser tab from 0% to 100% with smooth slider response, keyboard stepping, and mouse-wheel scrubbing.
-- **🔊 Dual Audio Interception Engine**:
-  - **HTML5 Media**: Controls `<audio>` and `<video>` tags with zero latency.
-  - **Web Audio API**: Injects a master `GainNode` directly into page audio contexts before `destination`, ensuring full control over advanced web apps, DAWs, Spotify Web, and HTML5 games without audio distortion.
-- **📂 Smart Activity Categorization**: Automatically classifies tabs into 8 domains: *Entertainment*, *Music*, *Work*, *Study*, *Gaming*, *Communication*, *Social*, and *Other*.
-- **🎯 One-Click Focus Modes**: Instantly apply acoustic presets (*Study*, *Gaming*, *Meeting*) with hover previews that lower distractions and prioritize essential audio.
-- **🔄 Drag & Drop Reclassification**: Drag tabs across categories with automated viewport autoscrolling zones and persistent domain-level memory.
-- **📑 Native Chrome Tab Groups**: Synchronizes with Chrome's native `chrome.tabGroups` API, grouping cluttered windows into color-coded groups with a single click.
-- **🚀 Powered by `react-fastload`**: Employs priority scheduling, deduplication, and viewport gating so tab favicons render efficiently without UI freezes or network bursts.
-- **⌨️ Global Shortcuts**: Toggle mute for the active tab anytime via `Alt+M` (`Cmd+Shift+M` on macOS).
-- **🎨 Smoky Glass Product Design**: Crafted with translucent frosted glass cards (`rgba(22, 26, 36, 0.68)`), midnight gradient backdrop (`#0B0D12`), luminous periwinkle accents (`#B6B8D0`), and soft cool-mint playback indicators (`#7BE0CA`).
+Built with a smoky glass interface matching its translucent orb visual identity, Hush operates with a **strict client-side privacy architecture**: zero audio streams, browsing history, or personal data leave your device.
 
 ---
 
-## 🏗️ Architecture & Audio Interception
+## 📸 Screenshots
 
-Standard browser extensions often fail to adjust sound on websites that route audio through the Web Audio API rather than plain `<video>` or `<audio>` elements. Hush solves this using a multi-tier Manifest V3 pipeline:
+<table align="center">
+  <tr>
+    <td align="center" width="50%">
+      <img src="docs/screenshots/dashboard.png" width="380" alt="Main Audio Mixer Dashboard" /><br />
+      <b>Audio Mixer Dashboard</b><br />
+      <sub>Active tab slider, Now Playing HUD, and category mixers</sub>
+    </td>
+    <td align="center" width="50%">
+      <img src="docs/screenshots/audio-intelligence.png" width="380" alt="Audio Intelligence Settings" /><br />
+      <b>Audio Intelligence & Scenes</b><br />
+      <sub>Acoustic scenes, conflict response, and ducking presets</sub>
+    </td>
+  </tr>
+  <tr>
+    <td align="center" width="50%">
+      <img src="docs/screenshots/priority-rules.png" width="380" alt="Site Priorities & Protection Rules" /><br />
+      <b>Site Priorities & Exclusions</b><br />
+      <sub>Protected domain list, custom scores, and local rules</sub>
+    </td>
+    <td align="center" width="50%">
+      <img src="docs/screenshots/organize-tabs.png" width="380" alt="Smart Organize Tabs Workspace" /><br />
+      <b>Smart Organize Tabs</b><br />
+      <sub>Interactive grouping preview and Chrome Tab Groups sync</sub>
+    </td>
+  </tr>
+</table>
+
+---
+
+## ✨ Feature Overview
+
+### 🎚️ Precision Per-Tab Volume Control
+- **Independent Tab Volume (0%–100%)**: Adjust any specific tab's volume without altering system volume or other tabs.
+- **Micro-Stepping**: Click any slider to adjust by ±1% using keyboard arrow keys, or ±10% with `Shift + Arrow`.
+- **Mouse-Wheel Scrubbing**: Hover over any volume slider and scroll to increase or decrease volume by 5%.
+- **Active Tab Mute Toggle**: Quickly toggle tab mute state directly in the popup or with global shortcut `Alt+M` (`Cmd+Shift+M` on macOS).
+
+### 🔊 Dual-Engine Audio Interception
+- **HTML5 Media**: Directly controls standard `<audio>` and `<video>` tags with zero latency.
+- **Web Audio API**: Injects a master `GainNode` directly into page audio contexts before `destination`, ensuring full volume scaling over complex web audio apps, DAWs, Spotify Web, and HTML5 games without audio distortion or popping.
+
+### 🧠 Intelligent Audio Priority (Local Sound Intelligence)
+- **Automatic Conflict Detection**: Detects when background audio competes with your active foreground work with a 250ms anti-oscillation debouncer.
+- **4 Selectable Acoustic Scenes**:
+  - **Deep Work**: Prioritizes communication (Zoom, Google Meet, Slack) and automatically suppresses background entertainment.
+  - **Study**: Prioritizes educational media and lectures (Coursera, Udemy) while ducking ambient music.
+  - **Entertainment**: Focuses on active video and stream audio.
+  - **Custom**: Tailored rules based on your configured domain priorities.
+- **Conflict Response Modes**: Choose between *Duck audio*, *Pause media*, or *Notify only*.
+- **Background Ducking Presets**: Switch between *Subtle (40%)*, *Balanced (25%)*, and *Whisper (10%)*.
+- **Action Ownership Journal**: Remembers pre-conflict baseline volumes and restores tabs when conflicts end. If you manually adjust a ducked slider, Hush relinquishes ownership and will **never** overwrite your chosen volume.
+- **Protected Domains**: Sites added to your protected list are completely immune to automatic volume reduction or pausing.
+- **Custom Site Priorities**: Assign specific priority scores (10–90) to domains that should always take precedence.
+- **Local Heuristic Learning**: Suggests domain priority rules when you repeatedly adjust volume for a domain, running 100% locally with a one-click "Clear Learned Rules" action.
+
+### 📂 Smart Tab Organization & Chrome Tab Groups
+- **Deterministic Classification**: Categorizes open tabs into 8 domains: *Entertainment*, *Music*, *Work*, *Study*, *Gaming*, *Communication*, *Social*, and *Other*.
+- **Native Chrome Tab Groups**: Synchronizes with the `chrome.tabGroups` API to bundle cluttered tabs into color-coded browser tab groups.
+- **Drag-and-Drop Reclassification**: Move tabs between categories with automated continuous viewport autoscrolling. Overrides are remembered persistently for future sessions.
+- **Category Master Sliders**: Lower or mute an entire category (e.g., mute all Social tabs) while preserving individual relative volume offsets.
+- **One-Click Focus Presets**: Instantly apply acoustic presets (*Study*, *Gaming*, *Meeting*) with live hover previews.
+
+---
+
+## 🏗️ How It Works
+
+Hush uses a multi-tier Manifest V3 pipeline combining isolated content scripts and a page-world Web Audio hook:
 
 ```mermaid
 flowchart TD
     Popup["🎨 React 19 Popup (UI)<br/>Scheduled via react-fastload"] -->|"chrome.runtime.sendMessage"| SW["⚙️ Background Service Worker<br/>(State, Rules & Grouping)"]
-    SW -->|"chrome.storage.local"| Storage[("💾 Persistent State")]
+    SW -->|"chrome.storage.local"| Storage[("💾 Local Persistent State")]
     SW -->|"chrome.tabs.sendMessage"| CS["🛡️ Content Script (Isolated World)<br/>HTML5 Media Elements & Observers"]
     CS -->|"window.dispatchEvent (HushVolumeChange)"| MW["🎛️ Main-World Hook (Page World)<br/>Web Audio API Master GainNode"]
     MW --> AudioDest["🔊 AudioDestinationNode"]
 ```
 
-1. **Popup UI (`src/App.tsx`)**: Built with React 19 and bundled with Vite CRX. Uses `FastLoadProvider` and `SmartImage` to schedule favicon decoding and prevent main-thread jank when listing dozens of open tabs.
-2. **Service Worker (`src/background.ts`)**: Maintains persistent tab volumes, category overrides, automatic dead-tab garbage collection on tab closure, and coordinates Chrome Tab Group creation.
-3. **Isolated Content Script (`src/content.ts`)**: Directly binds to `play`, `playing`, and `loadstart` media events, updating all `<audio>` and `<video>` tags with debounced mutation tracking.
-4. **Main-World Hook (`src/main-world.ts`)**: Injected into the page's execution context at `document_start`. Monkey-patches `AudioNode.prototype.connect` to insert an exponential gain multiplier (`setTargetAtTime`), guaranteeing smooth volume transitions without audio clicks or popping artifacts.
+1. **Popup UI (`src/App.tsx`)**: Built with React 19 and compiled with Vite. Utilizes `react-fastload` to schedule favicon decoding and prevent main-thread jank when listing large numbers of open tabs.
+2. **Service Worker (`src/background.ts`)**: Maintains persistent volume settings, manages dead-tab garbage collection on tab close, coordinates Chrome Tab Groups, and hosts the Intelligent Audio Priority Coordinator (`src/priority/`).
+3. **Isolated Content Script (`src/content.ts`)**: Binds to HTML5 `play`, `playing`, and `loadstart` media events, updating `<audio>` and `<video>` tags with debounced mutation tracking.
+4. **Main-World Hook (`src/main-world.ts`)**: Injected into the page's execution context at `document_start`. Hooks `AudioNode.prototype.connect` to insert an exponential gain multiplier (`setTargetAtTime`), guaranteeing smooth volume transitions without audio clicks or popping artifacts.
 
 ---
 
-## ⚡ Integration with `react-fastload`
+## 📥 Installation
 
-Hush integrates [**`react-fastload`**](https://github.com/abhishek-kumar-pundir/react-fastload) — an adaptive resource-loading scheduler designed for React apps.
+### Option 1: Chrome Web Store (Recommended)
+> **Status**: *Currently submitted and awaiting review in the Chrome Web Store.*  
+> Direct installation link will be published here as soon as review completes.
 
-### Why it makes Hush better:
-
-When users have 30, 60, or 100+ open browser tabs, rendering all tab icons simultaneously can cause heavy network bursts, favicon fetch queue contention, and layout jank.
-
-With `react-fastload`:
-- **Tiered Scheduling**:
-  - `CRITICAL` + `eager`: The active tab's favicon loads immediately above the fold.
-  - `HIGH`: Audible "Now Playing" tabs receive accelerated priority.
-  - `NORMAL`: Categorized tabs load with managed concurrency (capped at 6 simultaneous requests).
-  - `LOW`: Mass previews in the Smart Organize modal defer until scrolled into view.
-- **Deduplication**: Multiple open tabs from the same origin (e.g., 10 YouTube videos or 5 GitHub repositories) share a single cached resource entry.
-- **Adaptive Concurrency**: Prevents the browser extension popup thread from bottlenecking on slow connections or metered networks.
-
-```tsx
-import { FastLoadProvider, SmartImage } from 'react-fastload';
-
-// 1. Initialized in src/main.tsx
-<FastLoadProvider concurrency={6} strategy="adaptive">
-  <App />
-</FastLoadProvider>
-
-// 2. Scheduled Favicons in src/App.tsx
-<SmartImage
-  src={currentTab.favIconUrl}
-  alt=""
-  className="favicon-large"
-  priority="CRITICAL"
-  strategy="eager"
-/>
-```
-
----
-
-## 🎛️ Detailed Features
-
-### 1. Active Tab Card
-Displays the currently selected tab's title, domain, playing status, and a dedicated large volume slider. Includes a "Follow active tab" toggle to synchronize the card with whichever browser tab you switch to.
-
-### 2. Now Playing HUD
-An active list showing every tab currently producing sound across your browser windows. Click any row to jump directly to that tab and bring its window to the foreground.
-
-### 3. Organized Tab Groups & Master Controls
-Tabs are grouped into activities:
-- **Entertainment**: YouTube, Netflix, Hulu, Prime Video...
-- **Music**: Spotify, SoundCloud, Apple Music...
-- **Gaming**: Twitch, Discord, Cloud gaming...
-- **Work**: GitHub, StackOverflow, Figma, Notion...
-- **Communication**: Google Meet, Zoom, Slack, WhatsApp...
-- **Study**: Coursera, Udemy, Canvas...
-- **Social**: X/Twitter, Reddit, Instagram, Facebook...
-- **Other**: Custom and uncategorized domains.
-
-Each category has a **Master Group Volume Slider**. Dropping the "Social" group slider to 0% mutes all social tabs at once while maintaining individual relative offsets.
-
-### 4. Drag & Drop Reclassification
-Don't agree with a category? Grab any tab's grip handle and drop it into another category card.
-- **Auto-Scrolling**: Dragging towards the top or bottom of the popup activates automatic continuous scrolling zones.
-- **Domain Memory**: Hush remembers your override for that domain for all future sessions.
-
-### 5. Focus Modes
-Quick toggle presets designed for common workflows:
-
-| Mode | Target Volumes | Muted Categories |
-| :--- | :--- | :--- |
-| **Study** | Study 100%, Work 50%, Music 20% | Social, Entertainment, Gaming |
-| **Gaming** | Gaming 100%, Comm 80%, Music 30% | Entertainment, Social, Study, Work |
-| **Meeting** | Comm 100% | Gaming, Music, Entertainment, Social, Study, Work, Other |
-
-Hovering over any Focus Mode button displays a live popover listing open tabs that will be active or muted in that preset.
-
-### 6. Intelligent Audio Priority (Local Sound Intelligence)
-
-Hush includes a local-first browser audio coordination engine that automatically manages competing audio sources without cloud services or external AI APIs:
-
-```mermaid
-flowchart TD
-    Signals["Media Signals<br/>(audible, playing, tab activation)"] --> Detector["Conflict Detector & Debouncer<br/>(250ms anti-oscillation)"]
-    Detector --> Engine["Priority Rules Engine<br/>(Explicit user rules > Scene > Context)"]
-    Engine --> Planner["Pure Action Planner<br/>(Duck, Pause, or Notify)"]
-    Planner --> Journal["Action Ownership Journal<br/>(Tracks managed changes & overrides)"]
-    Journal --> Adapter["Audio Control Adapter<br/>(HTML5 / Web Audio / Safe Mute Fallback)"]
-    Adapter --> Restore["Safe Restoration<br/>(When conflict ends & unchanged by user)"]
-```
-
-#### Strict Rule Precedence:
-1. **Global Automation Disabled**: Respects user's master toggle.
-2. **Explicit Manual Overrides & Exclusions**: A manually adjusted or pinned tab is never automatically interfered with. Excluded domains are immune to automatic ducking.
-3. **Explicit Domain Priorities**: User-configured priorities (0–100) take precedence over scene defaults.
-4. **Active Scene Rules**: Domain and category priorities defined by the currently active scene.
-5. **Contextual Signals**: Foreground active tab bonus (+5) and natural activity weighting.
-6. **Deterministic Tie-Breaking**: Earliest audible timestamp, followed by tab ID fallback.
-
-#### Audio Scenes:
-- **Deep Work**: Prioritizes communication (Zoom, Google Meet, Slack) and suppresses background music, videos, and social audio.
-- **Study**: Prioritizes lectures and educational media (Coursera, Udemy, Khan Academy) while ducking ambient music.
-- **Entertainment**: Gives focus to active video and media streams.
-- **Custom**: Fully user-tailored domain priorities and ducking behavior.
-
-#### Safe Action Ownership & Restoration:
-- **Action Journal**: Every automated ducking action records the tab's navigation identity, pre-conflict baseline volume, and extension ownership.
-- **User Change Immunity**: If you manually move a slider on a ducked tab, Hush relinquishes ownership and will **never** overwrite your chosen volume when the conflict finishes.
-- **Navigation Safety**: If a ducked tab navigates to a new URL, the old action is invalidated to avoid restoring unrelated content.
-- **Pre-Mute Respect**: Tabs muted before Hush intervened are never unmuted automatically.
-
-#### Control Adapters & Technical Limitations:
-- **HTML5 Media**: Smooth volume adjustment down to target ducking level (default 25%).
-- **Web Audio**: Injected `GainNode` support.
-- **Safe Fallback**: On restricted or cross-origin frames where programmatic volume adjustment is blocked by browser security, Hush utilizes native tab muting as a truthful fallback rather than claiming volume reduction.
-- **Restricted Domains**: Extensions cannot inject into `chrome://` or Chrome Web Store pages.
-
-#### Local Contextual Learning:
-- Identifies repeated patterns (e.g., lowering a specific domain 3 times during Study mode).
-- Proposes concise, dismissible suggestions ("Make this your default rule?").
-- Operates 100% locally with zero analytics, zero telemetry, and a one-click "Clear Learned Rules" action.
-
-### 7. Smart Organize
-Click the **Organize tabs** button in the header to preview and group your loose browser tabs into native, color-coded Chrome Tab Groups using the `chrome.tabGroups` API.
-
----
-
-## ⌨️ Keyboard & Mouse Controls
-
-| Action | Windows & Linux | macOS | Description |
-| :--- | :--- | :--- | :--- |
-| **Mute Active Tab** | `Alt + M` | `Cmd + Shift + M` | Instantly mute/unmute the active tab without opening the popup. |
-| **Fine Volume Step** | `←` / `→` (or `↓` / `↑`) | `←` / `→` (or `↓` / `↑`) | Adjust focused volume slider by ±1%. |
-| **Large Volume Step** | `Shift + Arrow` | `Shift + Arrow` | Adjust focused volume slider by ±10%. |
-| **Mouse Wheel Scrub**| `Wheel Up / Down` | `Wheel Up / Down` | Hover over any slider to adjust by ±5%. |
-
----
-
-## 🔒 Permissions & Security
-
-Hush requests only the permissions strictly required to provide individual tab volume control and tab organization:
-
-- **`tabs`**: Used to read tab titles, favicons, and audible status to present them in the popup, and to focus a specific tab when clicked in the Now Playing HUD.
-- **`storage`**: Used to persist your volume settings and custom category overrides locally on your device via `chrome.storage.local`.
-- **`tabGroups`**: Used strictly when you click "Organize tabs" to bundle loose browser tabs into native, color-coded Chrome Tab Groups.
-
-**Privacy Guarantee**: Hush operates 100% client-side. No personal data, browsing history, audio samples, or telemetry is ever collected, stored on remote servers, or transmitted. See our [Privacy Policy](https://abhishek-kumar-pundir.github.io/Hush/privacy.html) for details.
-
----
-
-## 📥 Installation & Loading into Chrome
-
-### Prerequisites
-- [Node.js](https://nodejs.org/) (version 18 or newer)
-- [npm](https://www.npmjs.com/) (or pnpm / yarn)
-- Google Chrome, Brave, Microsoft Edge, or any Chromium-based browser
-
-### Build from Source
+### Option 2: Developer Installation (Load Unpacked)
 
 1. **Clone the repository**:
    ```bash
@@ -224,53 +143,188 @@ Hush requests only the permissions strictly required to provide individual tab v
    npm install
    ```
 
-3. **Start development mode** (with Hot Module Replacement):
-   ```bash
-   npm run dev
-   ```
-
-4. **Build the production extension**:
+3. **Build the extension**:
    ```bash
    npm run build
    ```
+   *(This compiles all TypeScript source files into the production bundle in the `dist` directory).*
 
-5. **Lint the codebase**:
-   ```bash
-   npm run lint
-   ```
-
-### Load Unpacked into Chrome
-
-1. Open your Chromium browser and navigate to `chrome://extensions`.
-2. Toggle on **Developer mode** in the top-right corner.
-3. Click **Load unpacked** in the top-left corner.
-4. Select the `dist` directory generated by `npm run build`.
-5. Pin **Hush** to your browser toolbar for quick access!
+4. **Load into your Chromium browser**:
+   - Open Chrome, Brave, Edge, or any Chromium browser and navigate to `chrome://extensions`.
+   - Enable **Developer mode** in the top-right corner.
+   - Click **Load unpacked** in the top-left corner.
+   - Select the **`dist`** directory inside the cloned `Hush` repository.
+   - Pin **Hush** to your toolbar for instant access.
 
 ---
 
-## 🏷️ Suggested GitHub Repository Topics
+## 🕹️ Usage Guide
 
-To maximize discoverability on GitHub, add these topics to your repository settings (`About` → `⚙️ Topics`):
+### Adjusting Volume
+- **Active Tab**: Open the popup. The top card shows the active tab with a large slider.
+- **Any Tab**: Scroll down to the categorized tab list and adjust any individual slider.
+- **Fine Control**: Click a slider and use the `←` / `→` arrow keys (1% step) or `Shift + Arrow` (10% step).
+- **Mouse-Wheel Scrubbing**: Hover over any slider and scroll your mouse wheel up or down.
+
+### Muting & Unmuting
+- Click the **Mute** button on the Active Tab card.
+- Or use the global keyboard shortcut: `Alt + M` (`Cmd + Shift + M` on macOS).
+
+### Audio Intelligence & Scenes
+1. In the popup, locate the **Sound Intelligence** card and click **Settings**.
+2. Toggle **Auto-manage audio** on or off.
+3. Select an **Acoustic Scene** (*Deep Work*, *Study*, *Entertainment*, *Custom*).
+4. Choose a default conflict response (*Duck audio*, *Pause media*, *Notify only*) and pick a ducking percentage preset.
+
+### Setting Protected Sites & Domain Priorities
+1. In Audio Intelligence settings, navigate to **Priority Rules & Exclusions**.
+2. **Protected sites**: Enter a domain (e.g., `zoom.us`) and click **Add** to prevent it from ever being ducked or paused.
+3. **Site priorities**: Enter a domain (e.g., `spotify.com`), pick a priority level (e.g., `High (80)`), and click **Add**.
+
+### Organizing Tabs into Groups
+- Click **Organize tabs** in the top header.
+- Review proposed groups, filter tabs by search query, or drag tabs between categories.
+- Click **Apply Groups** to create native Chrome Tab Groups.
+
+---
+
+## 🛠️ Technology Stack
+
+- **Framework**: [React 19](https://react.dev/)
+- **Language**: [TypeScript](https://www.typescriptlang.org/)
+- **Build System**: [Vite 8](https://vitejs.dev/) with [@crxjs/vite-plugin](https://crxjs.dev/vite-plugin)
+- **Design & Typography**: Vanilla CSS with [Inter (@fontsource/inter)](https://fontsource.org/fonts/inter)
+- **Icons**: [Lucide React](https://lucide.dev/)
+- **Resource Scheduler**: [react-fastload](https://github.com/abhishek-kumar-pundir/react-fastload)
+- **Unit Testing**: [Vitest](https://vitest.dev/)
+- **Linter**: [Oxlint](https://oxc.rs/)
+
+---
+
+## 🔒 Permissions & Privacy
+
+Hush requests only the permissions strictly required to provide individual tab volume control, audio ducking, and tab organization:
+
+| Permission | Purpose in Hush |
+| :--- | :--- |
+| **`tabs`** | Reads tab titles, URLs, favicons, and audible status to display active media in the popup mixer and update volume. |
+| **`storage`** | Saves volume levels, acoustic scenes, custom site priorities, and category overrides locally in `chrome.storage.local`. |
+| **`tabGroups`** | Creates, updates, and colors native Chrome Tab Groups when clicking "Organize tabs". |
+| **`<all_urls>`** *(Content Scripts)* | Injects media hooks to adjust HTML5 `<audio>`/`<video>` volume and Web Audio gain nodes across any website where audio plays. |
+
+### Privacy Architecture
+- **100% Local Execution**: Hush makes **zero external network requests** (`fetch`, `XMLHttpRequest`, or `WebSocket`).
+- **No Telemetry or Tracking**: No analytics libraries, error trackers, or third-party SDKs are bundled.
+- **No Audio Recording**: Audio data is never recorded, captured, or analyzed; only volume gain values are modified.
+- **Data Persistence**: Preferences are saved locally on your device via `chrome.storage.local`.
+- Read the complete [Privacy Policy](docs/privacy.html).
+
+---
+
+## ⚠️ Technical Limitations
+
+- **Browser-Restricted Pages**: Chrome security policy prevents extensions from executing content scripts on internal browser URLs (`chrome://*`, `chrome-extension://*`, and the Chrome Web Store). Volume on these tabs cannot be adjusted.
+- **Cross-Origin Iframes**: When media is embedded inside heavily restricted cross-origin iframes without parent script access, programmatic volume scaling may be blocked by browser sandbox boundaries. In these scenarios, Hush falls back to native tab muting.
+- **Pure Native Plugins**: Media rendered through proprietary native plugins that bypass standard HTML5 `<audio>`/`<video>` elements and Web Audio API contexts cannot be scaled incrementally, but can still be muted via native tab muting.
+
+---
+
+## 📂 Project Structure
 
 ```text
-chrome-extension, audio-control, tab-volume, tab-volume-control, audio-manager, web-audio-api, tab-groups, react19, vite, typescript, manifest-v3, productivity, focus-tool
+Hush/
+├── docs/                       # Documentation, privacy policy & assets
+│   ├── screenshots/            # Verified interface screenshots
+│   │   ├── dashboard.png
+│   │   ├── audio-intelligence.png
+│   │   ├── priority-rules.png
+│   │   └── organize-tabs.png
+│   ├── CHROME_WEB_STORE_LISTING.md # Store metadata & justifications
+│   ├── privacy.html            # Static privacy policy
+│   └── index.html              # Documentation home
+├── public/                     # Static extension icons and manifest assets
+│   ├── icon-16.png
+│   ├── icon-32.png
+│   ├── icon-48.png
+│   └── icon-128.png
+├── src/                        # Extension source code
+│   ├── components/             # React components
+│   │   ├── AudioIntelligenceSettings.tsx # Settings view & rules
+│   │   ├── OrganizeTabsWorkspace.tsx     # Tab grouping workspace
+│   │   └── SoundIntelligenceCard.tsx     # Dashboard status card
+│   ├── priority/               # Intelligent Audio Priority engine
+│   │   ├── action-journal.ts   # Ownership tracking & baseline restoration
+│   │   ├── action-planner.ts   # Pure action calculation
+│   │   ├── adapters.ts         # Audio control adapter interfaces
+│   │   ├── conflict-detector.ts # Multi-source conflict detection
+│   │   ├── coordinator.ts      # Coordination & state persistence
+│   │   ├── priority-engine.ts  # Priority score evaluation
+│   │   ├── scenes.ts           # Acoustic scene definitions
+│   │   ├── suggestion-engine.ts # Local heuristic proposals
+│   │   └── types.ts            # Priority system types
+│   ├── App.css                 # Smoky glass design system & component styles
+│   ├── App.tsx                 # Main popup mixer interface
+│   ├── background.ts           # Manifest V3 service worker
+│   ├── classifier.ts           # Deterministic domain classifier
+│   ├── content.ts              # Isolated-world HTML5 media observer
+│   ├── index.css               # Design tokens & color-scheme resets
+│   ├── main-world.ts           # Page-world Web Audio API GainNode hook
+│   └── main.tsx                # React entry point with react-fastload
+├── manifest.json               # Chrome Extension Manifest V3 configuration
+├── package.json                # Project dependencies & scripts
+├── vite.config.ts              # Vite + CRXJS build configuration
+├── CHANGELOG.md                # Release changelog
+├── CONTRIBUTING.md             # Contributor guidelines
+└── LICENSE                     # MIT License
 ```
 
 ---
 
-## 🛠️ Tech Stack & Dependencies
+## 🧪 Development & Testing
 
-- **Frontend**: [React 19](https://react.dev/)
-- **Typography**: [Inter (@fontsource/inter)](https://fontsource.org/fonts/inter)
-- **Resource Scheduler**: [react-fastload](https://github.com/abhishek-kumar-pundir/react-fastload)
-- **Extension Tooling**: [@crxjs/vite-plugin](https://crxjs.dev/vite-plugin)
-- **Icons**: [Lucide React](https://lucide.dev/)
-- **Linter**: [Oxlint](https://oxc.rs/)
-- **Bundler**: [Vite 8](https://vitejs.dev/)
+### Available Commands
+
+| Command | Action |
+| :--- | :--- |
+| `npm install` | Install all dependencies |
+| `npm run dev` | Start Vite dev server with Hot Module Replacement |
+| `npm test` | Run Vitest unit test suite |
+| `npm run lint` | Run Oxlint fast linter across source files |
+| `npx tsc -b --noEmit` | Run TypeScript compiler type checking |
+| `npm run build` | Build production extension bundle into `dist/` |
+
+### Verified Test Results
+```text
+✓ src/priority/__tests__/priority.test.ts (20 tests passed)
+✓ oxlint: 0 errors reported in src/
+✓ tsc: 0 type errors
+✓ vite build: successfully generated bundle in 1.2s
+```
+
+---
+
+## 🤝 Contributing
+
+Contributions, bug reports, and suggestions are welcome! Please review [CONTRIBUTING.md](CONTRIBUTING.md) for details on opening issues, architectural guidelines, and the pull request workflow.
 
 ---
 
 ## 📄 License
 
-This project is licensed under the MIT License — see the [LICENSE](LICENSE) file for details.
+This project is open-source and licensed under the [MIT License](LICENSE) © 2026 Abhishek Kumar Pundir.
+
+---
+
+## 🗺️ Project Status & Roadmap
+
+- [x] **v1.0.0 (Current)**:
+  - Per-tab volume control (0%–100%) and native tab muting.
+  - HTML5 and Web Audio API dual-engine interception.
+  - Intelligent Audio Priority with 4 Acoustic Scenes and conflict ducking.
+  - Native Chrome Tab Groups integration with auto-categorization.
+  - Complete client-side privacy with `chrome.storage.local` persistence.
+  - Submitted for Chrome Web Store review.
+- [ ] **Planned**:
+  - Custom user-defined acoustic scene creation.
+  - Per-tab equalizer curves (bass boost, vocal clarity).
+  - Configurable hotkeys for individual category muting.
