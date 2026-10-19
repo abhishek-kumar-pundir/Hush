@@ -15,6 +15,7 @@ import './App.css'
    ========================================================================== */
 
 const CURRENT_YEAR = 2026
+const CHROME_STORE_URL = 'https://chromewebstore.google.com/detail/hush/dbbkabhnlodiikoebjiijgcfoeiakiop'
 
 type DemoPreset = 'deep_work' | 'study' | 'entertainment'
 
@@ -285,7 +286,7 @@ export default function App() {
           <a href="#architecture" className="nav-link">Architecture</a>
           <a href="#scenes" className="nav-link">Acoustic Scenes</a>
           <a href="https://github.com/abhishek-kumar-pundir/Hush" target="_blank" rel="noopener noreferrer" className="nav-link">GitHub</a>
-          <a href="https://github.com/abhishek-kumar-pundir/Hush" target="_blank" rel="noopener noreferrer" className="nav-cta">
+          <a href={CHROME_STORE_URL} target="_blank" rel="noopener noreferrer" className="nav-cta">
             Add to Chrome
           </a>
         </div>
@@ -309,7 +310,7 @@ export default function App() {
             </div>
             <div className="hero-cta-group">
               <a
-                href="https://github.com/abhishek-kumar-pundir/Hush"
+                href={CHROME_STORE_URL}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="cta-primary"
@@ -520,7 +521,7 @@ export default function App() {
           </div>
           <div className="hero-cta-group reveal">
             <a
-              href="https://github.com/abhishek-kumar-pundir/Hush"
+              href={CHROME_STORE_URL}
               target="_blank"
               rel="noopener noreferrer"
               className="cta-primary"
@@ -576,6 +577,7 @@ export default function App() {
               <a href="#control">Control Panel</a>
               <a href="#architecture">Architecture</a>
               <a href="#scenes">Acoustic Scenes</a>
+              <a href={CHROME_STORE_URL} target="_blank" rel="noopener noreferrer">Chrome Web Store</a>
             </div>
             <div className="footer-col">
               <h4>Resources</h4>

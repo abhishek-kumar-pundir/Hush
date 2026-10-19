@@ -1,6 +1,8 @@
-# Chrome Web Store Listing Draft for Hush
+# Chrome Web Store Listing for Hush
 
-This document contains the exact metadata, copy, permission justifications, and category settings ready for submission to the Chrome Web Store Developer Dashboard.
+This document contains the verified metadata, copy, permission justifications, and category settings published on the Chrome Web Store Developer Dashboard.
+
+**Official Store URL**: [https://chromewebstore.google.com/detail/hush/dbbkabhnlodiikoebjiijgcfoeiakiop](https://chromewebstore.google.com/detail/hush/dbbkabhnlodiikoebjiijgcfoeiakiop)
 
 ---
 

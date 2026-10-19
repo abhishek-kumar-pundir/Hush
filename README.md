@@ -16,7 +16,7 @@
   <a href="https://vitejs.dev/"><img src="https://img.shields.io/badge/Vite-8.3-646cff?style=flat-square&logo=vite&logoColor=white" alt="Vite" /></a>
   <a href="https://github.com/abhishek-kumar-pundir/react-fastload"><img src="https://img.shields.io/badge/Powered%20by-react--fastload-ff4081?style=flat-square" alt="react-fastload" /></a>
   <a href="LICENSE"><img src="https://img.shields.io/badge/License-MIT-yellow.svg?style=flat-square" alt="License: MIT" /></a>
-  <img src="https://img.shields.io/badge/Chrome_Web_Store-Pending_Review-orange?style=flat-square" alt="Chrome Web Store: Pending Review" />
+  <a href="https://chromewebstore.google.com/detail/hush/dbbkabhnlodiikoebjiijgcfoeiakiop"><img src="https://img.shields.io/badge/Chrome_Web_Store-Published-success?style=flat-square&logo=googlechrome&logoColor=white" alt="Chrome Web Store: Published" /></a>
 </p>
 
 <p align="center">
@@ -127,8 +127,12 @@ flowchart TD
 ## 📥 Installation
 
 ### Option 1: Chrome Web Store (Recommended)
-> **Status**: *Currently submitted and awaiting review in the Chrome Web Store.*  
-> Direct installation link will be published here as soon as review completes.
+
+Hush is officially published on the Chrome Web Store. Install it with one click:
+
+👉 **[Add Hush to Chrome (Official Web Store)](https://chromewebstore.google.com/detail/hush/dbbkabhnlodiikoebjiijgcfoeiakiop)**
+
+> **Status**: *Published and verified on the Chrome Web Store.*
 
 ### Option 2: Developer Installation (Load Unpacked)
 
@@ -323,7 +327,7 @@ This project is open-source and licensed under the [MIT License](LICENSE) © 202
   - Intelligent Audio Priority with 4 Acoustic Scenes and conflict ducking.
   - Native Chrome Tab Groups integration with auto-categorization.
   - Complete client-side privacy with `chrome.storage.local` persistence.
-  - Submitted for Chrome Web Store review.
+  - Published on the Chrome Web Store.
 - [ ] **Planned**:
   - Custom user-defined acoustic scene creation.
   - Per-tab equalizer curves (bass boost, vocal clarity).
